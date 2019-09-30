@@ -218,6 +218,8 @@ public class SettingsFragment extends Fragment {
                                   socket.close();
                                   server.close();
 
+                                  new toastview().toast("File Received.", getActivity()).show();
+
                               }
                               catch (Exception e){
                                   e.printStackTrace();
@@ -243,7 +245,6 @@ public class SettingsFragment extends Fragment {
                    @Override
                    public void onDismiss(DialogInterface dialogInterface) {
                        socket = null;
-                       new toastview().toast("File Received.", getActivity()).show();
 
                    }
                });
