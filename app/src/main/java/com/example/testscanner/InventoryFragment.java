@@ -217,14 +217,13 @@ public class InventoryFragment extends Fragment {
                     e.printStackTrace();
                 }
 
-            Snackbar.make(getActivity().getCurrentFocus(), "Data Automatically Saved.", Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show();
+            new toastview().toast("Data Automatically Saved", getActivity()).show();
 
 
         }
         else {
-            Snackbar.make(getActivity().getCurrentFocus(), "Can't Print! :(", Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show();
+            new toastview().toast("Can't Print! :(", getActivity()).show();
+
 
         }
 
@@ -258,14 +257,12 @@ public class InventoryFragment extends Fragment {
                 e.printStackTrace();
             }
 
-            Snackbar.make(getActivity().getCurrentFocus(), "Data Automatically Saved.", Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show();
+            new toastview().toast("Data Automatically Saved", getActivity()).show();
 
 
         }
         else {
-            Snackbar.make(getActivity().getCurrentFocus(), "Can't Print! :(", Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show();
+            new toastview().toast("Can't Print! :(", getActivity()).show();
 
         }
 

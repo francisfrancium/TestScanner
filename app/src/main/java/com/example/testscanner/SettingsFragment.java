@@ -241,7 +241,7 @@ public class SettingsFragment extends Fragment {
                                               break;
                                       }
                                   }
-                                  pw.println(wordsarray[dc]+"\t"+wordsarray[rq]+"\t"+wordsarray[pq]+"\t"+wordsarray[bc]+"\t"+wordsarray[id]);
+                                  pw.println(wordsarray[id]+"\t"+wordsarray[dc]+"\t"+wordsarray[bc]+"\t"+wordsarray[pq]+"\t"+wordsarray[rq]);
 
                                   for (line = br.readLine(); line != null; line = br.readLine()){
 
@@ -256,7 +256,7 @@ public class SettingsFragment extends Fragment {
                                           wordsarray = line.split(",");
 
                                       }
-                                      pw.println(wordsarray[dc]+"\t"+wordsarray[rq]+"\t"+wordsarray[pq]+"\t"+wordsarray[bc]+"\t"+wordsarray[id]);
+                                      pw.println(wordsarray[id]+"\t"+wordsarray[dc]+"\t"+wordsarray[bc]+"\t"+wordsarray[pq]+"\t"+wordsarray[rq]);
 
                                   }
                                   pw.flush();
