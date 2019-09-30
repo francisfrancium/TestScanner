@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_pricecheck"
+            android:icon="@drawable/price_check"
+            android:title="@string/pricecheck" />
+
+        <item
+            android:id="@+id/nav_physcount"
+            android:icon="@drawable/storage"
+            android:title="@string/physcount"
+            />
+
+
+        <item
+            android:id="@+id/nav_receive"
+            android:icon="@drawable/product_recieve"
+            android:title="@string/receiving"/>
+        <item
+            android:id="@+id/nav_release"
+            android:icon="@drawable/product_release"
+            android:title="@string/releasing"
+            />
+        <item
+            android:id="@+id/nav_inven"
+            android:icon="@drawable/add_item"
+            android:title="@string/inventory" />
+        <item
+            android:id="@+id/nav_settings"
+            android:icon="@drawable/settings"
+            android:title="@string/settings" />
+
+        <item
+            android:id="@+id/nav_about"
+            android:icon="@drawable/about"
+            android:title="@string/about"
+            />
+
+    </group>
+
+
+
+</menu>

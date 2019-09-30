@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <item android:state_enabled="true">
+        <shape android:shape="rectangle">
+            <solid android:color="@color/white" />
+            <padding android:left="5dp"
+                android:top="4dp"
+                android:right="4dp"
+                android:bottom="4dp" />
+
+            <corners android:radius="3dp"/>
+
+        </shape>
+    </item>
+
+
+
+    <item android:state_enabled="false">
+        <shape android:shape="rectangle">
+            <solid android:color="@color/cardview_shadow_start_color" />
+            <padding android:left="5dp"
+                android:top="4dp"
+                android:right="4dp"
+                android:bottom="4dp" />
+            <corners android:radius="3dp"/>
+
+        </shape>
+    </item>
+
+
+</selector>

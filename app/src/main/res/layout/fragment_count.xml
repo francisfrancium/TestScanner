@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<RelativeLayout  xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:paddingHorizontal="15dp"
+    tools:context=".CountFragment"
+   >
+
+
+    <TextView
+        android:id="@+id/view_count"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="70dp"
+        android:background="@drawable/inputbackground"
+        android:elevation="6dp"
+        android:layout_toStartOf="@id/view_serial"
+        android:text="Scan a Code"
+        android:textSize="15dp"
+        android:padding="15dp"
+        android:layout_marginEnd="20dp"
+        android:textColor="#000000"/>
+
+    <TextView
+        android:id="@+id/view_serial"
+        android:layout_width="120dp"
+        android:layout_height="250dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="70dp"
+        android:layout_alignParentEnd="true"
+        android:background="@drawable/inputbackground"
+        android:elevation="6dp"
+        android:textSize="15dp"
+        android:padding="15dp"
+        android:textColor="#000000"
+        android:scrollbars = "vertical"
+        android:gravity="bottom"
+        />
+
+    <ScrollView
+        android:id="@+id/scrll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/view_count"
+        android:orientation="vertical"
+        android:overScrollMode="ifContentScrolls"
+        android:scrollbarStyle="outsideOverlay"
+        android:scrollbars="vertical"
+        >
+
+        <RelativeLayout
+            android:id="@+id/relascroll"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="50dp"
+            android:paddingHorizontal="20dp"
+
+            >
+
+            <Button
+                android:id="@+id/startcount"
+                android:layout_width="200dp"
+                android:layout_height="40dp"
+                android:layout_alignTop="@id/input_count_serialno"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="70dp"
+                android:background="@drawable/rounded"
+                android:text="Start Count"
+                android:elevation="6dp"
+
+                />
+
+            <Button
+                android:id="@+id/endcount"
+                android:layout_width="200dp"
+                android:layout_height="40dp"
+                android:layout_alignTop="@id/startcount"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="70dp"
+                android:background="@drawable/rounded"
+                android:text="End Count"
+                android:elevation="6dp"/>
+
+            <Button
+                android:id="@+id/newitem"
+                android:layout_width="100dp"
+                android:layout_height="40dp"
+                android:layout_alignTop="@id/input_count_user"
+                android:layout_alignEnd="@+id/serialoption"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="140dp"
+                android:background="@drawable/rounded"
+                android:elevation="6dp"
+                android:text="New Item" />
+
+            <Switch
+                android:id="@+id/serialoption"
+                android:layout_width="100dp"
+                android:layout_height="40dp"
+                android:layout_alignTop="@id/input_count_user"
+                android:layout_alignEnd="@id/input_count_user"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="70dp"
+                android:text="Serial No."
+                />
+
+            <EditText
+                android:id="@+id/input_count_serialno"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_alignTop="@+id/input_count"
+                android:layout_alignStart="@+id/input_count"
+                android:layout_marginTop="70dp"
+                android:layout_toStartOf="@id/newitem"
+                android:background="@drawable/inputbackground"
+                android:hint="Serial No."
+                android:inputType="text"
+                android:padding="10dp"
+                android:elevation="6dp"/>
+
+            <EditText
+                android:id="@+id/input_count"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_alignTop="@+id/input_count_location"
+               android:layout_toStartOf="@id/serialoption"
+                android:layout_marginTop="70dp"
+                android:background="@drawable/inputbackground"
+                android:hint="Barcode"
+                android:inputType="text"
+                android:padding="10dp"
+                android:elevation="6dp"/>
+
+
+            <EditText
+                android:id="@+id/input_count_location"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="25dp"
+                android:background="@drawable/inputbackground"
+                android:hint="Location"
+                android:inputType="text"
+                android:padding="10dp"
+                android:layout_toStartOf="@id/input_count_user"
+                android:elevation="6dp"
+
+                />
+
+            <EditText
+                android:id="@+id/input_count_user"
+                android:layout_width="100dp"
+                android:layout_height="40dp"
+                android:layout_alignTop="@id/input_count_location"
+                android:background="@drawable/inputbackground"
+                android:hint="User"
+                android:layout_marginStart="20dp"
+                android:inputType="text"
+                android:padding="10dp"
+                android:layout_alignParentEnd="true"
+                android:elevation="6dp"
+
+                />
+
+        </RelativeLayout>
+
+    </ScrollView>
+
+
+</RelativeLayout>

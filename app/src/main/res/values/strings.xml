@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">Test Scanner</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="pricecheck">Item Check</string>
+    <string name="physcount">Physical Count</string>
+    <string name="receiving">Receiving</string>
+    <string name="releasing">Delivery</string>
+    <string name="inventory">Inventory</string>
+    <string name="about">About</string>
+    <string name="settings">Settings</string>
+
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+
+</resources>

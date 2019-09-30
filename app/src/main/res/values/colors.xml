@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#d33f2c</color>
+    <color name="colorPrimaryDark">#e99f96</color>
+    <color name="colorAccent">#d33f2c</color>
+
+
+    <color name="abztrakColor">#d33f2c</color>
+    <color name="lightorange">#e99f96</color>
+    <color name="white">#ffffff</color>
+
+</resources>
