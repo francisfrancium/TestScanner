@@ -166,6 +166,7 @@ public class SettingsFragment extends Fragment {
                                   String line;
                                   String[] wordsarray;
 
+                                  String reg;
                                   int bc = 0;
                                   int dc = 0;
                                   int pq = 0;
@@ -175,16 +176,17 @@ public class SettingsFragment extends Fragment {
                                   line = br.readLine();
 
                                   if (line.contains("\t")){
-                                      wordsarray = line.split("\t");
-
+                                      reg = "\t";
                                   }
                                   else if (line.contains(";")){
-                                      wordsarray = line.split(";");
+                                      reg = ";";
                                   }
                                   else{
-                                      wordsarray = line.split(",");
-
+                                      reg = ",";
                                   }
+
+
+                                  wordsarray=line.split(reg);
 
                                   for (int x = 0; x<wordsarray.length; x++){
 
@@ -201,21 +203,12 @@ public class SettingsFragment extends Fragment {
                                               break;
                                       }
                                   }
+
                                   pw.println(wordsarray[id]+"\t"+wordsarray[dc]+"\t"+wordsarray[bc]+"\t"+wordsarray[pq]+"\t"+wordsarray[rq]);
 
                                   for (line = br.readLine(); line != null; line = br.readLine()){
+                                      wordsarray=line.split(reg);
 
-                                      if (line.contains("\t")){
-                                          wordsarray = line.split("\t");
-
-                                      }
-                                      else if (line.contains(";")){
-                                          wordsarray = line.split(";");
-                                      }
-                                      else{
-                                          wordsarray = line.split(",");
-
-                                      }
                                       pw.println(wordsarray[id]+"\t"+wordsarray[dc]+"\t"+wordsarray[bc]+"\t"+wordsarray[pq]+"\t"+wordsarray[rq]);
 
                                   }
@@ -262,7 +255,6 @@ public class SettingsFragment extends Fragment {
 
         return inflate;
     }
-
 
 
     private static String getIpAddress(Context context) {
