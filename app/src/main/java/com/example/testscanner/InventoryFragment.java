@@ -208,7 +208,7 @@ public class InventoryFragment extends Fragment {
                     entry = entry + "ID" + "\t" + "BARCODE" + "\t" + "ITEM DESCRIPTION" + "\t" + "PURCHASE QUANTITY" + "\t" + "RECEIVED QUANTITY" + "\t" + "VARIANCE" + "\n";
 
                     while (cursor.moveToNext()) {
-                        entry = entry + cursor.getString(0) + "\t" + cursor.getString(1) + "\t" + cursor.getString(2) + "\t" + cursor.getString(3) + "\t" + cursor.getString(4) + "\t" + (cursor.getInt(3) - cursor.getInt(4)) + "\n";
+                        entry = entry + cursor.getString(0) + "\t" + cursor.getString(1) + "\t" + cursor.getString(2) + "\t" + cursor.getString(3) + "\t" + cursor.getString(4) + "\t" + (cursor.getInt(4) - cursor.getInt(3)) + "\n";
                     }
                     fos.write(entry.getBytes());
                     fos.close();
