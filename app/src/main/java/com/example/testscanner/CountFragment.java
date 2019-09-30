@@ -310,15 +310,8 @@ public class CountFragment extends Fragment {
                     inputedLocation = editTextLoc.getText().toString();
                     inputedSerial = editTextSer.getText().toString();
                     inputedUser = editTextUs.getText().toString();
-
                     clearView();
-                    //editTextbarc.setEnabled(true);
-                    //editTextser.setEnabled(false);
-                    //serialopt.setEnabled(true);
-
-                    //editTextbarc.setText("");
                     editTextSer.setText("");
-                    //editTextbarc.requestFocus();
                     editTextSer.requestFocus();
 
 
@@ -368,19 +361,5 @@ public class CountFragment extends Fragment {
 
 
     }
-
-    private void SaveCount(){
-
-        FragmentTransaction transaction = this.getFragmentManager()
-                .beginTransaction();
-        if (Build.VERSION.SDK_INT >= 26) {
-            transaction.setReorderingAllowed(false);
-        }
-        transaction.detach(this).attach
-                (this).commit();
-
-    }
-
-
 
 }
