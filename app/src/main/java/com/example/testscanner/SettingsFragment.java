@@ -204,15 +204,60 @@ public class SettingsFragment extends Fragment {
                               final PrintWriter pw = new PrintWriter(new FileWriter(myFile));
                               try {
                                   String line;
+                                  String[] wordsarray;
+
+                                  int bc = 0;
+                                  int dc = 0;
+                                  int pq = 0;
+                                  int rq = 0;
+                                  int id = 0;
+
+                                  line = br.readLine();
+
+                                  if (line.contains("\t")){
+                                      wordsarray = line.split("\t");
+
+                                  }
+                                  else if (line.contains(";")){
+                                      wordsarray = line.split(";");
+                                  }
+                                  else{
+                                      wordsarray = line.split(",");
+
+                                  }
+
+                                  for (int x = 0; x<wordsarray.length; x++){
+
+                                      switch(wordsarray[x]){
+                                          case "ID": id = x;
+                                              break;
+                                          case "BARCODE": bc = x;
+                                              break;
+                                          case "ITEM DESCRIPTION": dc = x;
+                                              break;
+                                          case "PURCHASE QUANTITY": pq = x;
+                                              break;
+                                          case "RECEIVED QUANTITY": rq = x;
+                                              break;
+                                      }
+                                  }
+                                  pw.println(wordsarray[dc]+"\t"+wordsarray[rq]+"\t"+wordsarray[pq]+"\t"+wordsarray[bc]+"\t"+wordsarray[id]);
+
                                   for (line = br.readLine(); line != null; line = br.readLine()){
 
+                                      if (line.contains("\t")){
+                                          wordsarray = line.split("\t");
 
+                                      }
+                                      else if (line.contains(";")){
+                                          wordsarray = line.split(";");
+                                      }
+                                      else{
+                                          wordsarray = line.split(",");
 
+                                      }
+                                      pw.println(wordsarray[dc]+"\t"+wordsarray[rq]+"\t"+wordsarray[pq]+"\t"+wordsarray[bc]+"\t"+wordsarray[id]);
 
-                                      
-
-
-                                      pw.println(line);
                                   }
                                   pw.flush();
                                   pw.close();
@@ -228,17 +273,11 @@ public class SettingsFragment extends Fragment {
                               }
                               finally {
                                   if (socket != null){
-
                                       socket.close();
                                       server.close();
-
-
-
-
                                   }
                                   dialog.dismiss();
                               }
-
 
 
                       }

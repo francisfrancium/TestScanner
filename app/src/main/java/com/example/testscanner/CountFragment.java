@@ -289,8 +289,6 @@ public class CountFragment extends Fragment {
 
                     inputedLocation = editTextLoc.getText().toString();
                     inputed = editTextBarc.getText().toString();
-
-
                     setchecker = new HashSet<>();
 
 
