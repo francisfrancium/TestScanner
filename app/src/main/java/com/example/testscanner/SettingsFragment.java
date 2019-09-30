@@ -142,7 +142,7 @@ public class SettingsFragment extends Fragment {
                // dele.setCancelable(false);
                 dele.setTitle("Waiting for File. . .");
                 final String ip = getIpAddress(Objects.requireNonNull(getContext()));
-                dele.setMessage("IP Address:\n" + ip);
+                dele.setMessage("IP Address:\n" + ip +"\n\n(Use this IP Address in connecting with PC)");
                 dialog = dele.show();
 
                new Thread(new Runnable() {
@@ -243,7 +243,7 @@ public class SettingsFragment extends Fragment {
                    @Override
                    public void onDismiss(DialogInterface dialogInterface) {
                        socket = null;
-                       new toastview().toast("File Received", getActivity()).show();
+                       new toastview().toast("File Received.", getActivity()).show();
 
                    }
                });
@@ -320,7 +320,7 @@ public class SettingsFragment extends Fragment {
                             new toastview().toast("New Purchase Order File Uploaded!", getActivity()).show();
                         }
                         else {
-                            new toastview().toast("Upload Failed!", getActivity()).show();
+                            new toastview().toast("Upload Failed.", getActivity()).show();
                         }
 
                     }
