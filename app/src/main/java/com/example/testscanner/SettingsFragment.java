@@ -280,9 +280,7 @@ public class SettingsFragment extends Fragment {
         }
     }
 
-
     private void UploadMasterFile(){
-
 
         AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
 

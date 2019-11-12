@@ -123,7 +123,7 @@ public class CountFragment extends Fragment {
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_GO || actionId == EditorInfo.IME_ACTION_NEXT
                         || actionId == EditorInfo.IME_ACTION_DONE
-                        || event.getAction() == KeyEvent.ACTION_DOWN && event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
+                        || event.getAction() == KeyEvent.ACTION_DOWN || event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
 
                     inputedLocation = editTextLoc.getText().toString();
                     editTextUs.requestFocus();
@@ -277,15 +277,22 @@ public class CountFragment extends Fragment {
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_GO || actionId == EditorInfo.IME_ACTION_NEXT
                         || actionId == EditorInfo.IME_ACTION_DONE
-                        || event.getAction() == KeyEvent.ACTION_DOWN && event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
+                        || event.getAction() == KeyEvent.ACTION_UP && event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
 
                     textViewB.setText(Html.fromHtml(ser));
-
-                    editTextBarc.setEnabled(false);
+                    editTextBarc.clearFocus();
                     editTextSer.setEnabled(true);
-                    editTextSer.requestFocus();
                     serialopt.setEnabled(false);
                     newitem.setEnabled(true);
+                    editTextBarc.setEnabled(false);
+
+
+                    editTextSer.requestFocus();
+                    editTextSer.setCursorVisible(true);
+
+
+
+
 
                     inputedLocation = editTextLoc.getText().toString();
                     inputed = editTextBarc.getText().toString();
