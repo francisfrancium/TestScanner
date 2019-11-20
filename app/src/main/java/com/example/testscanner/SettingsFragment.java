@@ -155,10 +155,10 @@ public class SettingsFragment extends Fragment {
 
                               Date date = new Date();
                               @SuppressLint("SimpleDateFormat") SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH-mm-ss");
-                              String curDate = dateFormat.format(date);
+                             // String curDate = dateFormat.format(date);
 
                               File sdcard = Environment.getExternalStorageDirectory();
-                              File myFile = new File(sdcard,"TestReceived"+curDate+".csv");
+                              File myFile = new File(sdcard,"TestPurchaseOrder.csv");
 
                               final BufferedReader br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                               final PrintWriter pw = new PrintWriter(new FileWriter(myFile));
@@ -245,6 +245,7 @@ public class SettingsFragment extends Fragment {
                    @Override
                    public void onDismiss(DialogInterface dialogInterface) {
                        socket = null;
+                       UploadMasterFile();
 
                    }
                });
@@ -282,45 +283,47 @@ public class SettingsFragment extends Fragment {
 
     private void UploadMasterFile(){
 
-        AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
-
-        alert.setTitle("Input File Name");
-        alert.setMessage("Must include file extension(.csv/.txt)");
+//        AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
+//
+//        alert.setTitle("Input File Name");
+//        alert.setMessage("Must include file extension(.csv/.txt)");
 
         // Set an EditText view to get user input
         final EditText input = new EditText(getActivity());
         input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_NORMAL);
-        alert.setView(input);
+//        alert.setView(input);
 
-        alert.setNegativeButton("Ok", new OnClickListener() {
-            public void onClick(DialogInterface dialog, int whichButton) {
+//        alert.setNegativeButton("Ok", new OnClickListener() {
+//            public void onClick(DialogInterface dialog, int whichButton) {
                 db.deleteTable();
-                inputtedFileName = String.valueOf(input.getText());
+//                inputtedFileName = String.valueOf(input.getText());
+                inputtedFileName = "TestPurchaseOrder.csv";
 
                 try {
                     File sdcard = Environment.getExternalStorageDirectory();
-                    File file = new File(sdcard,inputtedFileName);
+                    File file = new File(sdcard,"TestPurchaseOrder.csv");
 
                     BufferedReader br = new BufferedReader(new FileReader(file));
                     String line;
+                    br.readLine();
 
                     while ((line = br.readLine()) != null) {
-                        String[] str = line.split(",");
+                        String[] str = line.split("\t");
 
-                        if(str.length == 3) {
+//                        if(str.length == 5) {
 
-                            String Barcode = str[0];
+                            String Barcode = str[2];
                             String Description = str[1];
-                            Integer Received = Integer.parseInt(str[2]);
+                            Integer Received = Integer.parseInt(str[3]);
                             Integer Released = 0;
 
                             db.insertData(Barcode,Description,Received,Released,0);
 
                             new toastview().toast("New Purchase Order File Uploaded!", getActivity()).show();
-                        }
-                        else {
-                            new toastview().toast("Upload Failed.", getActivity()).show();
-                        }
+//                        }
+//                        else {
+//                            new toastview().toast("Upload Failed.", getActivity()).show();
+//                        }
 
                     }
                     br.close() ;
@@ -331,16 +334,16 @@ public class SettingsFragment extends Fragment {
                     e.printStackTrace();
                 }
 
-            }
-        });
+//            }
+//        });
 
-        alert.setPositiveButton("Cancel", new OnClickListener() {
-            public void onClick(DialogInterface dialog, int whichButton) {
-                dialog.dismiss();
-            }
-        });
-
-        alert.show();
+//        alert.setPositiveButton("Cancel", new OnClickListener() {
+//            public void onClick(DialogInterface dialog, int whichButton) {
+//                dialog.dismiss();
+//            }
+//        });
+//
+//        alert.show();
     }
 
 
