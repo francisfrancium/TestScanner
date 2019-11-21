@@ -38,6 +38,7 @@ import static android.content.DialogInterface.*;
 public class SettingsFragment extends Fragment {
     private static Socket socket;
     private DatabaseHelper db;
+    boolean success;
 
 
 
@@ -154,6 +155,8 @@ public class SettingsFragment extends Fragment {
                                   socket.close();
                                   server.close();
 
+                                  success = true;
+
                                   new toastview().toast("File Received.", getActivity()).show();
 
                               }
@@ -181,7 +184,12 @@ public class SettingsFragment extends Fragment {
                    @Override
                    public void onDismiss(DialogInterface dialogInterface) {
                        socket = null;
-                       UploadMasterFile();
+                       if(success) {
+                           UploadMasterFile();
+                           success = false;
+                       }
+                       else
+                           new toastview().toast("Cancelled", getActivity()).show();
 
                    }
                });
@@ -219,20 +227,8 @@ public class SettingsFragment extends Fragment {
 
     private void UploadMasterFile(){
 
-//        AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
-//
-//        alert.setTitle("Input File Name");
-//        alert.setMessage("Must include file extension(.csv/.txt)");
 
-        // Set an EditText view to get user input
-        final EditText input = new EditText(getActivity());
-        input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_NORMAL);
-//        alert.setView(input);
-
-//        alert.setNegativeButton("Ok", new OnClickListener() {
-//            public void onClick(DialogInterface dialog, int whichButton) {
                 db.deleteTable();
-//                inputtedFileName = String.valueOf(input.getText());
                 inputtedFileName = "TestPurchaseOrder.csv";
 
                 try {
@@ -270,16 +266,6 @@ public class SettingsFragment extends Fragment {
                     e.printStackTrace();
                 }
 
-//            }
-//        });
-
-//        alert.setPositiveButton("Cancel", new OnClickListener() {
-//            public void onClick(DialogInterface dialog, int whichButton) {
-//                dialog.dismiss();
-//            }
-//        });
-//
-//        alert.show();
     }
 
 
