@@ -57,75 +57,11 @@ public class SettingsFragment extends Fragment {
 
         // Inflate the layout for this fragment
         View inflate = inflater.inflate(R.layout.fragment_settings, container, false);
-        Button UplButton = inflate.findViewById(R.id.upload_button);
         Button POButton = inflate.findViewById(R.id.receive_button);
         db = new DatabaseHelper(this.getContext());
         new toastview();
 
         Objects.requireNonNull(getActivity()).setTitle("Settings");
-
-        UplButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                final AlertDialog.Builder dele = new AlertDialog.Builder(getActivity());
-                dele.create();
-                dele.setCancelable(false);
-                dele.setTitle("Upload New Purchase Order File?");
-                dele.setMessage("Clicking 'Yes' will delete the existing data. ");
-                dele.setNegativeButton("Yes", new OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-
-                        /*--------------------------------------------------------------*/
-                        AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
-
-                        alert.setTitle("Input Password");
-
-                        // Set an EditText view to get user input
-                        final EditText input = new EditText(getActivity());
-                        input.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_VARIATION_PASSWORD);
-                        alert.setView(input);
-
-                        alert.setNegativeButton("Ok", new OnClickListener() {
-                            public void onClick(DialogInterface dialog, int whichButton) {
-                                String value = String.valueOf(input.getText());
-                                if (value.equals("123456")){
-                                    UploadMasterFile();
-                                }
-                                else {
-
-                                    new toastview().toast("Wrong Password!", getActivity()).show();
-                                }
-
-                            }
-                        });
-
-                        alert.setPositiveButton("Cancel", new OnClickListener() {
-                            public void onClick(DialogInterface dialog, int whichButton) {
-                                dialog.dismiss();
-                            }
-                        });
-
-                        alert.show();
-
-                    /*--------------------------------------------------------------*/
-
-                }
-                });
-                dele.setPositiveButton("No", new OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        dialogInterface.dismiss();
-                    }
-                });
-
-                dele.show();
-
-            }
-        });
-
-
 
 
         POButton.setOnClickListener(new View.OnClickListener() {

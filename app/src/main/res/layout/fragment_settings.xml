@@ -6,27 +6,16 @@
     tools:context=".SettingsFragment">
 
 
+
     <Button
-        android:id="@+id/upload_button"
+        android:id="@+id/receive_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="100dp"
         android:layout_centerHorizontal="true"
         android:background="@drawable/rounded"
         android:elevation="6dp"
-        android:text="PURCHASE ORDER\nFile" />
-
-
-    <Button
-        android:id="@+id/receive_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="150dp"
-        android:layout_centerHorizontal="true"
-        android:layout_alignTop="@+id/upload_button"
-        android:background="@drawable/rounded"
-        android:elevation="6dp"
-        android:text="Receive a\nFile" />
+        android:text="Purchase Order\nFile" />
 
 
 </RelativeLayout>
