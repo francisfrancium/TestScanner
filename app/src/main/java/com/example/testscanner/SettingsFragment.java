@@ -1,6 +1,6 @@
 package com.example.testscanner;
 
-import android.annotation.SuppressLint;
+
 import android.app.AlertDialog;
 
 import android.content.Context;
@@ -9,12 +9,12 @@ import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import android.os.Environment;
-import android.text.InputType;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -27,8 +27,6 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Objects;
 
 
@@ -38,11 +36,11 @@ import static android.content.DialogInterface.*;
 public class SettingsFragment extends Fragment {
     private static Socket socket;
     private DatabaseHelper db;
-    boolean success;
+    private boolean success;
 
 
 
-    private String inputtedFileName;
+//    private String inputtedFileName;
 
 
 
@@ -90,12 +88,9 @@ public class SettingsFragment extends Fragment {
                               final ServerSocket server = new ServerSocket(8998);
                               socket = server.accept();
 
-                              Date date = new Date();
-                              @SuppressLint("SimpleDateFormat") SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH-mm-ss");
-                             // String curDate = dateFormat.format(date);
 
                               File sdcard = Environment.getExternalStorageDirectory();
-                              File myFile = new File(sdcard,"TestPurchaseOrder.csv");
+                              File myFile = new File(sdcard,"TestPurchaseOrder.txt");
 
                               final BufferedReader br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                               final PrintWriter pw = new PrintWriter(new FileWriter(myFile));
@@ -121,6 +116,7 @@ public class SettingsFragment extends Fragment {
                                   else{
                                       reg = ",";
                                   }
+
 
 
                                   wordsarray=line.split(reg);
@@ -158,6 +154,7 @@ public class SettingsFragment extends Fragment {
                                   success = true;
 
                                   new toastview().toast("File Received.", getActivity()).show();
+                                  dialog.dismiss();
 
                               }
                               catch (Exception e){
@@ -229,7 +226,7 @@ public class SettingsFragment extends Fragment {
 
 
                 db.deleteTable();
-                inputtedFileName = "TestPurchaseOrder.csv";
+
 
                 try {
                     File sdcard = Environment.getExternalStorageDirectory();

@@ -6,15 +6,9 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.database.Cursor;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
 import android.os.Environment;
 import android.os.StrictMode;
 import android.text.InputType;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,12 +17,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.TableLayout;
-import android.widget.TableRow;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import com.google.android.material.snackbar.Snackbar;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 
 import java.io.BufferedInputStream;
 import java.io.DataOutputStream;
@@ -40,18 +32,18 @@ import java.io.OutputStream;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.Objects;
+
 
 
 public class InventoryFragment extends Fragment {
 
-    DatabaseHelper db;
-    ListView userlist;
-    Button sendinven;
+    private DatabaseHelper db;
+    private ListView userlist;
 
-    ArrayList<String> listItem;
-    ArrayAdapter adapter;
+    private ArrayList<String> listItem;
 
-    String inputtedIPAdd;
+    private String inputtedIPAdd;
 
 
 
@@ -70,10 +62,10 @@ public class InventoryFragment extends Fragment {
 
         db = new DatabaseHelper(this.getContext());
         listItem = new ArrayList<>();
-        userlist = (ListView) inflate.findViewById(R.id.inventory);
-        sendinven = (Button) inflate.findViewById(R.id.sendinven_button);
+        userlist = inflate.findViewById(R.id.inventory);
+        Button sendinven = inflate.findViewById(R.id.sendinven_button);
 
-        getActivity().setTitle("Inventory");
+        Objects.requireNonNull(getActivity()).setTitle("Inventory");
 
 
 
@@ -172,12 +164,12 @@ public class InventoryFragment extends Fragment {
         Cursor cursor = db.viewData();
 
         if (!(cursor.getCount() ==0)) {
-            listItem.add("ID\t\tItem\t\t\t\t\t\tPurchased Quantity\t\tReceived");
+            listItem.add("ID\t\tItem\t\t\t\t\t\tReceived\t\tReleased");
             while (cursor.moveToNext()){
-                listItem.add(cursor.getString(0) + "\t\t" + cursor.getString(1) + "\t\t\t\t\t"  + cursor.getString(3) + "\t\t\t\t\t\t\t\t" + cursor.getString(4) );
+                listItem.add(cursor.getString(0) + "\t\t" + cursor.getString(1) + "\t\t\t\t\t"  + cursor.getString(4) + "\t\t\t\t\t\t\t\t" + cursor.getString(5) );
             }
 
-            adapter = new ArrayAdapter(this.getContext(), android.R.layout.simple_list_item_1,listItem);
+            ArrayAdapter adapter = new ArrayAdapter<>(Objects.requireNonNull(this.getContext()), android.R.layout.simple_list_item_1, listItem);
             userlist.setAdapter(adapter);
 
             new toastview().toast("Data Loaded!", getActivity()).show();
@@ -189,13 +181,13 @@ public class InventoryFragment extends Fragment {
 
     }
 
-    public void savePOOnClick (){
+    private void savePOOnClick(){
 
-        final String FILENAME = "TestScannerGRReport.csv";
+        final String FILENAME = "TestScannerGRReport.txt";
 
         Cursor cursor = db.viewData();
 
-        String entry = "";
+        StringBuilder entry = new StringBuilder();
 
 
         File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath(),FILENAME);
@@ -205,12 +197,12 @@ public class InventoryFragment extends Fragment {
                 try {
                     FileOutputStream fos = new FileOutputStream(file);
 
-                    entry = entry + "ID" + "\t" + "BARCODE" + "\t" + "ITEM DESCRIPTION" + "\t" + "PURCHASE QUANTITY" + "\t" + "RECEIVED QUANTITY" + "\t" + "VARIANCE" + "\n";
+                    entry.append("ID").append(",").append("BARCODE").append(",").append("ITEM DESCRIPTION").append(",").append("PURCHASE QUANTITY").append(",").append("RECEIVED QUANTITY").append(",").append("VARIANCE").append("\n");
 
                     while (cursor.moveToNext()) {
                         entry = entry + cursor.getString(0) + "\t" + cursor.getString(1) + "\t" + cursor.getString(2) + "\t" + cursor.getString(3) + "\t" + cursor.getString(4) + "\t" + (cursor.getInt(4) - cursor.getInt(3)) + "\n";
                     }
-                    fos.write(entry.getBytes());
+                    fos.write(entry.toString().getBytes());
                     fos.close();
 
                 } catch (Exception e){
@@ -229,13 +221,13 @@ public class InventoryFragment extends Fragment {
 
     }
 
-    public void saveDeliOnClick (){
+    private void saveDeliOnClick(){
 
         final String FILENAME = "TestScannerDeliReport.csv";
 
         Cursor cursor = db.viewData();
 
-        String entry = "";
+        StringBuilder entry = new StringBuilder();
 
 
         File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath(),FILENAME);
@@ -245,12 +237,12 @@ public class InventoryFragment extends Fragment {
             try {
                 FileOutputStream fos = new FileOutputStream(file);
 
-                entry = entry + "ID" + "\t" + "BARCODE" + "\t" + "ITEM DESCRIPTION" + "\t" + "DELIVERY QUANTITY" + "\t" + "RELEASED QUANTITY" + "\t" + "VARIANCE" + "\n";
+                entry.append("ID").append("\t").append("BARCODE").append("\t").append("ITEM DESCRIPTION").append("\t").append("DELIVERY QUANTITY").append("\t").append("RELEASED QUANTITY").append("\t").append("VARIANCE").append("\n");
 
                 while (cursor.moveToNext()) {
-                    entry = entry + cursor.getString(0) + "\t" + cursor.getString(1) + "\t" + cursor.getString(2) + "\t" + "Test" + "\t" + cursor.getString(5) + "\t" + (cursor.getInt(5) - cursor.getInt(5)) + "\n";
+                    entry.append(cursor.getString(0)).append("\t").append(cursor.getString(1)).append("\t").append(cursor.getString(2)).append("\t").append("Test").append("\t").append(cursor.getString(5)).append("\t").append(cursor.getInt(5) - cursor.getInt(5)).append("\n");
                 }
-                fos.write(entry.getBytes());
+                fos.write(entry.toString().getBytes());
                 fos.close();
 
             } catch (Exception e){
@@ -299,11 +291,13 @@ public class InventoryFragment extends Fragment {
 
                 // sendfile
                 File sdcard = Environment.getExternalStorageDirectory();
-                File myFile = new File(sdcard,"TestScannerGRReport.csv");
+                File myFile = new File(sdcard,"TestScannerGRReport.txt");
+
+
                 byte [] mybytearray  = new byte [(int)myFile.length()];
                 FileInputStream fis = new FileInputStream(myFile);
                 BufferedInputStream bis = new BufferedInputStream(fis);
-                bis.read(mybytearray,0,mybytearray.length);
+                int read = bis.read(mybytearray, 0, mybytearray.length);
                 OutputStream os = sock.getOutputStream();
                 new toastview().toast("Sending...", getActivity()).show();
 

@@ -1,16 +1,11 @@
 package com.example.testscanner;
 
 
-        import android.graphics.Color;
-        import android.graphics.drawable.Drawable;
-        import android.os.Build;
+
         import android.os.Bundle;
 
-        import androidx.core.app.NotificationCompat;
-        import androidx.fragment.app.Fragment;
-        import androidx.fragment.app.FragmentManager;
-        import androidx.fragment.app.FragmentTransaction;
 
+        import androidx.fragment.app.Fragment;
         import android.text.Html;
         import android.text.method.ScrollingMovementMethod;
         import android.view.KeyEvent;
@@ -19,7 +14,7 @@ package com.example.testscanner;
         import android.view.ViewGroup;
         import android.view.inputmethod.EditorInfo;
         import android.widget.Button;
-        import android.widget.CheckBox;
+
         import android.widget.CompoundButton;
         import android.widget.EditText;
         import android.widget.ScrollView;
@@ -28,11 +23,8 @@ package com.example.testscanner;
 
         import com.google.android.material.snackbar.Snackbar;
 
-        import org.w3c.dom.Text;
-
-        import java.lang.reflect.Array;
-        import java.nio.channels.Channel;
         import java.util.HashSet;
+        import java.util.Objects;
         import java.util.Set;
 
 
@@ -41,36 +33,32 @@ package com.example.testscanner;
  */
 public class CountFragment extends Fragment {
 
-    EditText editTextBarc ;
-    EditText editTextLoc;
-    EditText editTextSer;
-    EditText editTextUs;
+    private EditText editTextBarc ;
+    private EditText editTextLoc;
+    private EditText editTextSer;
+    private EditText editTextUs;
 
-    ScrollView scrll;
+    private ScrollView scrll;
 
-    TextView textViewA;
-    TextView textViewB;
+    private TextView textViewA;
+    private TextView textViewB;
 
-    Button startcount;
-    Button endcount;
-    Button newitem;
+    private  Button startcount;
+    private  Button endcount;
+    private   Button newitem;
 
-    Switch serialopt;
+    private   Switch serialopt;
 
-    String inputed;
-    String inputedLocation;
-    String inputedSerial;
-    String inputedUser;
+    private   String inputed;
+    private   String inputedLocation;
+    private   String inputedSerial;
+    private String inputedUser;
 
 
 
-    Set<String> setchecker;
-    int currentcount= 0;
+    private Set<String> setchecker;
 
-    String barcode = "<font color = 'red'> BARCODE:</font>" ;
-    String ser = "<font color = 'red'> SERIAL NO.:</font>" ;
-    String item = "<font color = '#4f4f4f'> ITEM DESCRIPTION:</font>" ;
-    String loc = "<font color = '#4f4f4f'> LOCATION:</font>" ;
+    private  String ser = "<font color = 'red'> SERIAL NO.:</font>" ;
 
 
     public CountFragment() {
@@ -83,25 +71,25 @@ public class CountFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View inflate = inflater.inflate(R.layout.fragment_count, container, false);
-        editTextBarc = (EditText) inflate.findViewById(R.id.input_count);
-        editTextLoc = (EditText) inflate.findViewById(R.id.input_count_location);
-        editTextSer = (EditText) inflate.findViewById(R.id.input_count_serialno);
-        editTextUs = (EditText) inflate.findViewById(R.id.input_count_user);
+        editTextBarc = inflate.findViewById(R.id.input_count);
+        editTextLoc = inflate.findViewById(R.id.input_count_location);
+        editTextSer = inflate.findViewById(R.id.input_count_serialno);
+        editTextUs = inflate.findViewById(R.id.input_count_user);
 
 
-        scrll = (ScrollView) inflate.findViewById(R.id.scrll);
+        scrll = inflate.findViewById(R.id.scrll);
 
-        serialopt = (Switch) inflate.findViewById(R.id.serialoption);
+        serialopt = inflate.findViewById(R.id.serialoption);
 
-        newitem = (Button) inflate.findViewById(R.id.newitem);
-        startcount = (Button) inflate.findViewById(R.id.startcount);
-        endcount = (Button) inflate.findViewById(R.id.endcount);
-        textViewA = (TextView) inflate.findViewById(R.id.view_count);
-        textViewB = (TextView) inflate.findViewById(R.id.view_serial);
+        newitem = inflate.findViewById(R.id.newitem);
+        startcount = inflate.findViewById(R.id.startcount);
+        endcount = inflate.findViewById(R.id.endcount);
+        textViewA = inflate.findViewById(R.id.view_count);
+        textViewB = inflate.findViewById(R.id.view_serial);
         textViewB.setMovementMethod(new ScrollingMovementMethod());
 
 
-        getActivity().setTitle("Physical Count");
+        Objects.requireNonNull(getActivity()).setTitle("Physical Count");
 
         inputed = "--------------------";
         inputedLocation = "--------------------";
@@ -179,19 +167,19 @@ public class CountFragment extends Fragment {
 
 
 
-                    Snackbar.make(getActivity().getCurrentFocus(), "Input Location and Username!", Snackbar.LENGTH_LONG)
+                    Snackbar.make(Objects.requireNonNull(getActivity().getCurrentFocus()), "Input Location and Username!", Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
                     editTextLoc.requestFocus();
 
                 }
                 else if (editTextLoc.getText().toString().matches("")) {
-                    Snackbar.make(getActivity().getCurrentFocus(), "Input Item Location!", Snackbar.LENGTH_LONG)
+                    Snackbar.make(Objects.requireNonNull(getActivity().getCurrentFocus()), "Input Item Location!", Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
                     editTextLoc.requestFocus();
 
                 }
                 else if (editTextUs.getText().toString().matches("")) {
-                    Snackbar.make(getActivity().getCurrentFocus(), "Input Username!", Snackbar.LENGTH_LONG)
+                    Snackbar.make(Objects.requireNonNull(getActivity().getCurrentFocus()), "Input Username!", Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
                     editTextUs.requestFocus();
 
@@ -260,10 +248,13 @@ public class CountFragment extends Fragment {
 
     private void clearView(){
 
+        String barcode = "<font color = 'red'> BARCODE:</font>";
         textViewA.setText(Html.fromHtml(barcode));
         textViewA.append("\n"+inputed+"\n\n");
+        String item = "<font color = '#4f4f4f'> ITEM DESCRIPTION:</font>";
         textViewA.append(Html.fromHtml(item));
         textViewA.append("\n--------------------\n\n");
+        String loc = "<font color = '#4f4f4f'> LOCATION:</font>";
         textViewA.append(Html.fromHtml(loc));
         textViewA.append("\n"+inputedLocation+"\n\n");
 
@@ -323,7 +314,7 @@ public class CountFragment extends Fragment {
                     if (setchecker.contains(inputedSerial)){
                         textViewB.append("\n");
                         textViewB.append(Html.fromHtml("<font color = 'red'>" + inputedSerial +"</font>"));
-                        Snackbar.make(getActivity().getCurrentFocus(), "Duplicate Serial No.", Snackbar.LENGTH_LONG)
+                        Snackbar.make(Objects.requireNonNull(getActivity().getCurrentFocus()), "Duplicate Serial No.", Snackbar.LENGTH_LONG)
                                 .setAction("Action", null).show();
                     }
                     else{

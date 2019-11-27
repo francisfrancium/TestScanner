@@ -24,11 +24,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String LOG_4 = "DATETRANS";
 
     public static final String POC_TABLE = "purchaseorder_table";
-    public static final String POC_1 = "ID";
-    public static final String POC_2 = "PONUMBER";
-    public static final String POC_3 = "STATUS";
-    public static final String POC_4 = "PERSONNEL";
-    public static final String POC_5 = "DATEACOMP";
+
 
 
     public DatabaseHelper(Context context) {

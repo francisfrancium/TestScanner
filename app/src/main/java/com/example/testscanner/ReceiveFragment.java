@@ -1,6 +1,7 @@
 package com.example.testscanner;
 
 
+import android.annotation.SuppressLint;
 import android.database.Cursor;
 import android.os.Bundle;
 
@@ -17,20 +18,21 @@ import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Objects;
 
 
 public class ReceiveFragment extends Fragment {
 
-    EditText editText ;
-    DatabaseHelper db;
-    TextView textViewBC;
-    TextView textViewPO;
-    public static String inputed;
-    int currentcount[] = new int[100];
+    private EditText editText ;
+    private DatabaseHelper db;
+    private TextView textViewBC;
+    private TextView textViewPO;
+    static String inputed;
+    private int[] currentcount = new int[100];
 
-    String barcode = "<font color = 'red'> BARCODE:</font>" ;
-    String item = "<font color = '#4f4f4f'> ITEM DESCRIPTION:</font>" ;
-    String rcv = "<font color = '#4f4f4f'> CURRENT IN INVENTORY:</font>" ;
+    private String barcode = "<font color = 'red'> BARCODE:</font>" ;
+    private String item = "<font color = '#4f4f4f'> ITEM DESCRIPTION:</font>" ;
+    private String rcv = "<font color = '#4f4f4f'> CURRENT IN INVENTORY:</font>" ;
 
     public ReceiveFragment() {
         // Required empty public constructor
@@ -41,12 +43,12 @@ public class ReceiveFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View inflate = inflater.inflate(R.layout.fragment_receive, container, false);
-        textViewBC = (TextView) inflate.findViewById(R.id.view_recieve);
-        textViewPO = (TextView) inflate.findViewById(R.id.view_POtable);
-        editText = (EditText) inflate.findViewById(R.id.input_receiving);
+        textViewBC = inflate.findViewById(R.id.view_recieve);
+        textViewPO = inflate.findViewById(R.id.view_POtable);
+        editText = inflate.findViewById(R.id.input_receiving);
         db = new DatabaseHelper(this.getContext());
 
-        getActivity().setTitle("Receiving");
+        Objects.requireNonNull(getActivity()).setTitle("Receiving");
         inputed = "--------------------";
 
         clearView();
@@ -74,6 +76,7 @@ public class ReceiveFragment extends Fragment {
     }
 
 
+    @SuppressLint("SetTextI18n")
     private void UpdateReceivedData() {
 
         Cursor cursor = db.validateReceivedData();
@@ -95,7 +98,7 @@ public class ReceiveFragment extends Fragment {
                 textViewBC.append(Html.fromHtml(rcv));
                 textViewBC.append("\n" + (cursor.getInt(3)) + "\n");
                 currentcount[cursor.getInt(0)]++;
-                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+                @SuppressLint("SimpleDateFormat") SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
                 String date = sdf.format(new Date());
 
                 db.logInsert(inputed, "Received", date);

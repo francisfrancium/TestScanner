@@ -4,7 +4,6 @@ package com.example.testscanner;
 import android.database.Cursor;
 import android.os.Bundle;
 
-import androidx.annotation.DrawableRes;
 import androidx.fragment.app.Fragment;
 
 import android.text.Html;
@@ -16,23 +15,23 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.google.android.material.snackbar.Snackbar;
+import java.util.Objects;
 
 
 public class CheckFragment extends Fragment {
 
-    EditText editText ;
-    DatabaseHelper db;
-    TextView textViewID;
+    private EditText editText ;
+    private DatabaseHelper db;
+    private TextView textViewID;
 
-    public static String inputed;
+    static String inputed;
 
 
-    String ID = "<font color = '#4f4f4f'> ID NUMBER:</font>" ;
-    String barcode = "<font color = 'red'> BARCODE:</font>" ;
-    String item = "<font color = '#4f4f4f'> ITEM DESCRIPTION:</font>" ;
-    String rcv = "<font color = '#4f4f4f'> PURCHASE ORDER QTY.:</font>" ;
-    String rls = "<font color = '#4f4f4f'> RECEIVED COUNT:</font>" ;
+    private String ID = "<font color = '#4f4f4f'> ID NUMBER:</font>" ;
+    private String barcode = "<font color = 'red'> BARCODE:</font>" ;
+    private String item = "<font color = '#4f4f4f'> ITEM DESCRIPTION:</font>" ;
+    private  String rcv = "<font color = '#4f4f4f'> RECEIVED COUNT:</font>" ;
+    private String rls = "<font color = '#4f4f4f'> DELIVERED COUNT:</font>" ;
 
     public CheckFragment() {
 
@@ -44,11 +43,11 @@ public class CheckFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View inflate = inflater.inflate(R.layout.fragment_check, container, false);
-        editText = (EditText) inflate.findViewById(R.id.input_checking);
-        textViewID = (TextView) inflate.findViewById(R.id.view_checking);
+        editText = inflate.findViewById(R.id.input_checking);
+        textViewID = inflate.findViewById(R.id.view_checking);
         db = new DatabaseHelper(this.getContext());
 
-        getActivity().setTitle("Item Check");
+        Objects.requireNonNull(getActivity()).setTitle("Item Check");
 
         inputed = "--------------------";
         editText.requestFocus();
@@ -99,15 +98,15 @@ public class CheckFragment extends Fragment {
                 textViewID.append(Html.fromHtml(item));
                 textViewID.append("\n" + cursor.getString(2) + "\n\n");
                 textViewID.append(Html.fromHtml(rcv));
-                textViewID.append("\n" + cursor.getString(3) + "\n");
+                textViewID.append("\n" + cursor.getString(4) + "\n");
                 textViewID.append(Html.fromHtml(rls));
-                textViewID.append("\n" + cursor.getString(4));
+                textViewID.append("\n" + cursor.getString(5));
             }
         }
 
     }
 
-    public void clearView(){
+    private void clearView(){
         textViewID.setText(Html.fromHtml(ID));
         textViewID.append("\n--------------------\n\n");
         textViewID.append(Html.fromHtml(barcode));
