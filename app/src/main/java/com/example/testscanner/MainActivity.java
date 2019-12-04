@@ -144,10 +144,10 @@ public class MainActivity extends AppCompatActivity
 
         }
         else if (id == R.id.nav_about) {
-
-            this.setTitle("About the Sample Scanner");
-                 new toastview().toast("", this).cancel();
-                 new toastview().toast("Under Construction!",this).show();
+                 AboutFragment fragment = new AboutFragment();
+                 FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                 fragmentTransaction.replace(R.id.fragment_container,fragment);
+                 fragmentTransaction.commit();
         }
 
 
