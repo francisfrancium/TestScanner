@@ -101,14 +101,6 @@ public class MainActivity extends AppCompatActivity
             fragmentTransaction.commit();
 
         }
-//       else if (id == R.id.nav_physcount) {
-//
-//                 CountFragment fragment = new CountFragment();
-//                 FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-//                 fragmentTransaction.replace(R.id.fragment_container,fragment);
-//                 fragmentTransaction.commit();
-//
-//       }
 
 
         else if (id == R.id.nav_receive) {
@@ -132,12 +124,7 @@ public class MainActivity extends AppCompatActivity
                  logIn(new SettingsFragment());
 
         }
-        else if (id == R.id.nav_about) {
 
-            this.setTitle("About the Sample Scanner");
-                 new toastview().toast("", this).cancel();
-                 new toastview().toast("Under Construction!",this).show();
-        }
 
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);

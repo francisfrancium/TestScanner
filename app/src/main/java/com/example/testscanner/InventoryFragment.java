@@ -156,7 +156,6 @@ public class InventoryFragment extends Fragment {
 
         viewData();
         savePOOnClick();
-        saveDeliOnClick();
     }
 
 
@@ -164,9 +163,9 @@ public class InventoryFragment extends Fragment {
         Cursor cursor = db.viewData();
 
         if (!(cursor.getCount() ==0)) {
-            listItem.add("ID\t\tItem\t\t\t\t\t\tReceived\t\tReleased");
+            listItem.add("ID\t\tItem\t\t\t\t\t\tPurchased Order\t\tReceived");
             while (cursor.moveToNext()){
-                listItem.add(cursor.getString(0) + "\t\t" + cursor.getString(1) + "\t\t\t\t\t"  + cursor.getString(4) + "\t\t\t\t\t\t\t\t" + cursor.getString(5) );
+                listItem.add(cursor.getString(0) + "\t\t" + cursor.getString(1) + "\t\t\t\t\t"  + cursor.getString(3) + "\t\t\t\t\t\t\t\t" + cursor.getString(4) );
             }
 
             ArrayAdapter adapter = new ArrayAdapter<>(Objects.requireNonNull(this.getContext()), android.R.layout.simple_list_item_1, listItem);
@@ -221,44 +220,6 @@ public class InventoryFragment extends Fragment {
 
     }
 
-    private void saveDeliOnClick(){
-
-        final String FILENAME = "TestScannerDeliReport.csv";
-
-        Cursor cursor = db.viewData();
-
-        StringBuilder entry = new StringBuilder();
-
-
-        File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath(),FILENAME);
-
-
-        if (!(cursor.getCount() ==0)) {
-            try {
-                FileOutputStream fos = new FileOutputStream(file);
-
-                entry.append("ID").append("\t").append("BARCODE").append("\t").append("ITEM DESCRIPTION").append("\t").append("DELIVERY QUANTITY").append("\t").append("RELEASED QUANTITY").append("\t").append("VARIANCE").append("\n");
-
-                while (cursor.moveToNext()) {
-                    entry.append(cursor.getString(0)).append("\t").append(cursor.getString(1)).append("\t").append(cursor.getString(2)).append("\t").append("Test").append("\t").append(cursor.getString(5)).append("\t").append(cursor.getInt(5) - cursor.getInt(5)).append("\n");
-                }
-                fos.write(entry.toString().getBytes());
-                fos.close();
-
-            } catch (Exception e){
-                e.printStackTrace();
-            }
-
-            new toastview().toast("Data Automatically Saved", getActivity()).show();
-
-
-        }
-        else {
-            new toastview().toast("Can't Print! :(", getActivity()).show();
-
-        }
-
-    }
 
 
 
