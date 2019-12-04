@@ -35,12 +35,6 @@
             android:icon="@drawable/settings"
             android:title="@string/settings" />
 
-        <item
-            android:id="@+id/nav_about"
-            android:icon="@drawable/about"
-            android:title="@string/about"
-            />
-
     </group>
 
 
