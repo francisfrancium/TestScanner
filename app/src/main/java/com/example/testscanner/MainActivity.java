@@ -101,14 +101,14 @@ public class MainActivity extends AppCompatActivity
             fragmentTransaction.commit();
 
         }
-       else if (id == R.id.nav_physcount) {
-
-                 CountFragment fragment = new CountFragment();
-                 FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                 fragmentTransaction.replace(R.id.fragment_container,fragment);
-                 fragmentTransaction.commit();
-
-       }
+//       else if (id == R.id.nav_physcount) {
+//
+//                 CountFragment fragment = new CountFragment();
+//                 FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+//                 fragmentTransaction.replace(R.id.fragment_container,fragment);
+//                 fragmentTransaction.commit();
+//
+//       }
 
 
         else if (id == R.id.nav_receive) {
@@ -119,18 +119,7 @@ public class MainActivity extends AppCompatActivity
             fragmentTransaction.commit();
 
         }
-        else if (id == R.id.nav_release) {
-
-                 //Toast.makeText(this, "Under Construction! :(", Toast.LENGTH_SHORT).show();
-
-
-                 ReleaseFragment fragment = new ReleaseFragment();
-                 FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                 fragmentTransaction.replace(R.id.fragment_container,fragment);
-                 fragmentTransaction.commit();
-
-
-        }
+//
         else if (id == R.id.nav_inven) {
 
             InventoryFragment fragment = new InventoryFragment();

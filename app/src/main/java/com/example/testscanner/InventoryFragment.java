@@ -305,6 +305,7 @@ public class InventoryFragment extends Fragment {
                 os.write(mybytearray,0,mybytearray.length);
                 os.flush();
 
+
                 sock.close();
                 new toastview().toast("File Sent!", getActivity()).show();
                 System.out.println("File Sent!");
@@ -327,8 +328,6 @@ public class InventoryFragment extends Fragment {
                 e.printStackTrace();
 
             }
-
-
 
 
         }

@@ -23,6 +23,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String LOG_3 = "TRANS";
     public static final String LOG_4 = "DATETRANS";
 
+
     public static final String POC_TABLE = "purchaseorder_table";
 
 
