@@ -199,7 +199,7 @@ public class InventoryFragment extends Fragment {
                     entry.append("ID").append(",").append("BARCODE").append(",").append("ITEM DESCRIPTION").append(",").append("PURCHASE QUANTITY").append(",").append("RECEIVED QUANTITY").append(",").append("VARIANCE").append("\n");
 
                     while (cursor.moveToNext()) {
-                        entry = entry + cursor.getString(0) + "\t" + cursor.getString(1) + "\t" + cursor.getString(2) + "\t" + cursor.getString(3) + "\t" + cursor.getString(4) + "\t" + (cursor.getInt(4) - cursor.getInt(3)) + "\n";
+                        entry.append(cursor.getString(0) + "\t" + cursor.getString(1) + "\t" + cursor.getString(2) + "\t" + cursor.getString(3) + "\t" + cursor.getString(4) + "\t" + (cursor.getInt(4) - cursor.getInt(3)) + "\n");
                     }
                     fos.write(entry.toString().getBytes());
                     fos.close();
