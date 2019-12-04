@@ -90,6 +90,7 @@ public class SettingsFragment extends Fragment {
 
 
                               File sdcard = Environment.getExternalStorageDirectory();
+
                               File myFile = new File(sdcard,"TestPurchaseOrder.txt");
 
                               final BufferedReader br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
