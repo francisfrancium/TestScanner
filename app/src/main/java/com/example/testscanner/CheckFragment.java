@@ -30,8 +30,8 @@ public class CheckFragment extends Fragment {
     private String ID = "<font color = '#4f4f4f'> ID NUMBER:</font>" ;
     private String barcode = "<font color = 'red'> BARCODE:</font>" ;
     private String item = "<font color = '#4f4f4f'> ITEM DESCRIPTION:</font>" ;
-    private  String rcv = "<font color = '#4f4f4f'> RECEIVED COUNT:</font>" ;
-    private String rls = "<font color = '#4f4f4f'> DELIVERED COUNT:</font>" ;
+    private  String rcv = "<font color = '#4f4f4f'> PURCHASE ORDER:</font>" ;
+    private String rls = "<font color = '#4f4f4f'> RECEIVED COUNT:</font>" ;
 
     public CheckFragment() {
 
@@ -98,9 +98,9 @@ public class CheckFragment extends Fragment {
                 textViewID.append(Html.fromHtml(item));
                 textViewID.append("\n" + cursor.getString(2) + "\n\n");
                 textViewID.append(Html.fromHtml(rcv));
-                textViewID.append("\n" + cursor.getString(4) + "\n");
+                textViewID.append("\n" + cursor.getString(3) + "\n");
                 textViewID.append(Html.fromHtml(rls));
-                textViewID.append("\n" + cursor.getString(5));
+                textViewID.append("\n" + cursor.getString(4));
             }
         }
 

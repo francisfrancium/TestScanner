@@ -192,14 +192,14 @@ public class InventoryFragment extends Fragment {
         File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath(),FILENAME);
 
 
-        if (!(cursor.getCount() ==0)) {
+        if (!(cursor.getCount() ==0 )) {
                 try {
                     FileOutputStream fos = new FileOutputStream(file);
 
                     entry.append("ID").append(",").append("BARCODE").append(",").append("ITEM DESCRIPTION").append(",").append("PURCHASE QUANTITY").append(",").append("RECEIVED QUANTITY").append(",").append("VARIANCE").append("\n");
 
                     while (cursor.moveToNext()) {
-                        entry.append(cursor.getString(0) + "\t" + cursor.getString(1) + "\t" + cursor.getString(2) + "\t" + cursor.getString(3) + "\t" + cursor.getString(4) + "\t" + (cursor.getInt(4) - cursor.getInt(3)) + "\n");
+                        entry.append(cursor.getString(0)).append(",").append(cursor.getString(1)).append(",").append(cursor.getString(2)).append(",").append(cursor.getString(3)).append(",").append(cursor.getString(4)).append(",").append(cursor.getInt(4) - cursor.getInt(3)).append("\n");
                     }
                     fos.write(entry.toString().getBytes());
                     fos.close();
