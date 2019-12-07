@@ -239,10 +239,8 @@ public class InventoryFragment extends Fragment {
             Socket sock ;
 
             try {
-                new toastview().toast("Searching...", getActivity()).show();
-                sock = new Socket(inputtedIPAdd, 8998);
-
                 new toastview().toast("Connecting...", getActivity()).show();
+                sock = new Socket(inputtedIPAdd, 8998);
 
                 System.out.println("Connecting...");
 
@@ -250,8 +248,8 @@ public class InventoryFragment extends Fragment {
                 DataOutputStream DOS = new DataOutputStream(sock.getOutputStream());
                 DOS.writeUTF("GR");
 
-                // sendfile
-                File sdcard = Environment.getExternalStorageDirectory();
+                    // sendfile
+                    File sdcard = Environment.getExternalStorageDirectory();
                 File myFile = new File(sdcard,"TestScannerGRReport.txt");
 
 
@@ -260,7 +258,6 @@ public class InventoryFragment extends Fragment {
                 BufferedInputStream bis = new BufferedInputStream(fis);
                 int read = bis.read(mybytearray, 0, mybytearray.length);
                 OutputStream os = sock.getOutputStream();
-                new toastview().toast("Sending...", getActivity()).show();
 
                 System.out.println("Sending...");
                 os.write(mybytearray,0,mybytearray.length);
