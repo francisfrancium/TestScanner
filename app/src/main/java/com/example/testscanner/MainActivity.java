@@ -94,27 +94,21 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
              if (id == R.id.nav_pricecheck) {
             CheckFragment fragment = new CheckFragment();
-            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.replace(R.id.fragment_container,fragment);
-            fragmentTransaction.commit();
+                 changeFragment(fragment);
              }
 
 
         else if (id == R.id.nav_receive) {
 
             ReceiveFragment fragment = new ReceiveFragment();
-            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.replace(R.id.fragment_container,fragment);
-            fragmentTransaction.commit();
+                 changeFragment(fragment);
 
         }
 
         else if (id == R.id.nav_inven) {
 
             InventoryFragment fragment = new InventoryFragment();
-            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.replace(R.id.fragment_container,fragment);
-            fragmentTransaction.commit();
+                 changeFragment(fragment);
 
         }
         else if (id == R.id.nav_settings) {
@@ -167,9 +161,7 @@ public class MainActivity extends AppCompatActivity
                             navigationView.setCheckedItem(R.id.nav_pricecheck);
                             settings = false;
                             CheckFragment fragment = new CheckFragment();
-                            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                            fragmentTransaction.replace(R.id.fragment_container,fragment);
-                            fragmentTransaction.commit();
+                            changeFragment(fragment);
                         }
                         else{
                             Toast.makeText(getApplicationContext(), "Wrong password entered too many times!", Toast.LENGTH_SHORT).show();
@@ -209,9 +201,7 @@ public class MainActivity extends AppCompatActivity
                     navigationView.setCheckedItem(R.id.nav_pricecheck);
                     settings = false;
                     CheckFragment fragment = new CheckFragment();
-                    FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                    fragmentTransaction.replace(R.id.fragment_container,fragment);
-                    fragmentTransaction.commit();
+                    changeFragment(fragment);
                 }
                 else {
                     new Handler().postDelayed(new Runnable() {
