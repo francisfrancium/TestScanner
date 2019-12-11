@@ -29,6 +29,11 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     Fragment currentfragt;
+    boolean settings;
+
+    private NavigationView navigationView;
+
+
 
     final int[] x = {0};
 
@@ -36,22 +41,14 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-
-
-
+        navigationView = findViewById(R.id.nav_view);
 
 
             currentfragt = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
             logIn(new CheckFragment());
 
-
-
-
-
-
-
-
+            settings = false;
+            navigationView.setCheckedItem(R.id.nav_pricecheck);
 
 
 
@@ -83,6 +80,7 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
@@ -99,8 +97,7 @@ public class MainActivity extends AppCompatActivity
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.fragment_container,fragment);
             fragmentTransaction.commit();
-
-        }
+             }
 
 
         else if (id == R.id.nav_receive) {
@@ -111,7 +108,7 @@ public class MainActivity extends AppCompatActivity
             fragmentTransaction.commit();
 
         }
-//
+
         else if (id == R.id.nav_inven) {
 
             InventoryFragment fragment = new InventoryFragment();
@@ -121,11 +118,10 @@ public class MainActivity extends AppCompatActivity
 
         }
         else if (id == R.id.nav_settings) {
+                settings = true;
                  logIn(new SettingsFragment());
 
         }
-
-
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
@@ -166,19 +162,33 @@ public class MainActivity extends AppCompatActivity
 
                     if (x[0] == 5) {
 
-                        Toast.makeText(getApplicationContext(), "Wrong password entered too many times!", Toast.LENGTH_SHORT).show();
+                        if (settings){
 
-                        new Handler().postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                System.exit(0);
-                            }
-                        }, 800);
+                            navigationView.setCheckedItem(R.id.nav_pricecheck);
+                            settings = false;
+                            CheckFragment fragment = new CheckFragment();
+                            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                            fragmentTransaction.replace(R.id.fragment_container,fragment);
+                            fragmentTransaction.commit();
                         }
+                        else{
+                            Toast.makeText(getApplicationContext(), "Wrong password entered too many times!", Toast.LENGTH_SHORT).show();
+
+                            new Handler().postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    System.exit(0);
+                                }
+                            }, 800);
+                        }
+
+
+
+                        }
+
                     else {
                         Toast.makeText(getApplicationContext(), "Wrong Password! " + (5 - x[0]) + " tries left!" , Toast.LENGTH_SHORT).show();
                         logIn(targetFragment);
-
 
                     }
 
@@ -189,21 +199,33 @@ public class MainActivity extends AppCompatActivity
 
         });
 
-        /*
+
         alert.setPositiveButton("Cancel", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
-                Toast.makeText(getApplicationContext(), "Bye Bye!", Toast.LENGTH_SHORT).show();
-                dialog.dismiss();
 
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        System.exit(0);
-                    }
-                }, 500);
+
+
+                if (settings){
+                    navigationView.setCheckedItem(R.id.nav_pricecheck);
+                    settings = false;
+                    CheckFragment fragment = new CheckFragment();
+                    FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                    fragmentTransaction.replace(R.id.fragment_container,fragment);
+                    fragmentTransaction.commit();
+                }
+                else {
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            System.exit(0);
+                        }
+                    }, 800);
+
+                }
+
             }
         });
-*/
+
         alert.show();
 
 
