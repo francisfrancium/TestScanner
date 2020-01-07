@@ -5,12 +5,15 @@
     android:layout_height="match_parent"
     tools:context=".InventoryFragment">
 
+
+
     <ListView
         android:id="@+id/inventory"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
         android:layout_marginBottom="200dp"
+        android:layout_weight=".70"
         />
 
     <Button

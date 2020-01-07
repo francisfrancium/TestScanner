@@ -163,6 +163,7 @@ public class MainActivity extends AppCompatActivity
 
                             navigationView.setCheckedItem(R.id.nav_pricecheck);
                             settings = false;
+                            Toast.makeText(getApplicationContext(), "Wrong password entered too many times!", Toast.LENGTH_SHORT).show();
                             CheckFragment fragment = new CheckFragment();
                             changeFragment(fragment);
                         }

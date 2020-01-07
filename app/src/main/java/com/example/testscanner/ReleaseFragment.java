@@ -102,6 +102,7 @@ public class ReleaseFragment extends Fragment {
                 String date = sdf.format(new Date());
 
 
+
                 db.logInsert(inputed, "Delivery", date);
                 textViewDO.setText("RELEASED QUANTITY:\n\t"   + currentcount[cursor.getInt(0)] + "\n");
                 db.updateReleasedData(inputed, currentcount[cursor.getInt(0)]);

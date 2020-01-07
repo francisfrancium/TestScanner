@@ -163,9 +163,15 @@ public class InventoryFragment extends Fragment {
         Cursor cursor = db.viewData();
 
         if (!(cursor.getCount() ==0)) {
-            listItem.add("ID\t\tItem\t\t\t\t\t\tPurchased Order\t\tReceived");
+            listItem.add("ID\tItem\t\t\t\t\t\t\tP.O.\t\tReceived");
             while (cursor.moveToNext()){
-                listItem.add(cursor.getString(0) + "\t\t" + cursor.getString(1) + "\t\t\t\t\t"  + cursor.getString(3) + "\t\t\t\t\t\t\t\t" + cursor.getString(4) );
+
+                StringBuilder string = new StringBuilder();
+
+
+
+
+                listItem.add(cursor.getString(0) + "\t\t" + cursor.getString(1) + "\t\t\t\t\t"  + cursor.getString(3) + "\t\t\t\t\t\t" + cursor.getString(4) );
             }
 
             ArrayAdapter adapter = new ArrayAdapter<>(Objects.requireNonNull(this.getContext()), android.R.layout.simple_list_item_1, listItem);
@@ -251,7 +257,6 @@ public class InventoryFragment extends Fragment {
                     // sendfile
                     File sdcard = Environment.getExternalStorageDirectory();
                 File myFile = new File(sdcard,"TestScannerGRReport.txt");
-
 
                 byte [] mybytearray  = new byte [(int)myFile.length()];
                 FileInputStream fis = new FileInputStream(myFile);

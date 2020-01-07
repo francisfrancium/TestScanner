@@ -106,44 +106,53 @@ public class SettingsFragment extends Fragment {
                                   int rq = 0;
                                   int id = 0;
 
-                                  line = br.readLine();
 
-                                  if (line.contains("\t")){
-                                      reg = "\t";
-                                  }
-                                  else if (line.contains(";")){
-                                      reg = ";";
-                                  }
-                                  else{
-                                      reg = ",";
-                                  }
+
+//                                  line = br.readLine();
 
 
 
-                                  wordsarray=line.split(reg);
 
-                                  for (int x = 0; x<wordsarray.length; x++){
 
-                                      switch(wordsarray[x]){
-                                          case "ID": id = x;
-                                              break;
-                                          case "BARCODE": bc = x;
-                                              break;
-                                          case "ITEM DESCRIPTION": dc = x;
-                                              break;
-                                          case "PURCHASE QUANTITY": pq = x;
-                                              break;
-                                          case "RECEIVED QUANTITY": rq = x;
-                                              break;
-                                      }
-                                  }
+//                                  wordsarray=line.split(reg);
 
-                                  pw.println(wordsarray[id]+"\t"+wordsarray[dc]+"\t"+wordsarray[bc]+"\t"+wordsarray[pq]+"\t"+wordsarray[rq]);
+//                                  for (int x = 0; x<wordsarray.length; x++){
+//
+//                                      switch(wordsarray[x]){
+//                                          case "ID": id = x;
+//                                              break;
+//                                          case "BARCODE": bc = x;
+//                                              break;
+//                                          case "ITEM DESCRIPTION": dc = x;
+//                                              break;
+//                                          case "PURCHASE QUANTITY": pq = x;
+//                                              break;
+//                                          case "RECEIVED QUANTITY": rq = x;
+//                                              break;
+//                                      }
+//                                  }
+
+                                  //pw.println(wordsarray[id]+"\t"+wordsarray[dc]+"\t"+wordsarray[bc]+"\t"+wordsarray[pq]+"\t"+wordsarray[rq]);
+
+//                                  for (int x = 0; x<2 ; x++)
+//                                      br.readLine();
 
                                   for (line = br.readLine(); line != null; line = br.readLine()){
+                                      if (line.contains("\t")){
+                                          reg = "\t";
+                                      }
+                                      else if (line.contains(";")){
+                                          reg = ";";
+                                      }
+                                      else{
+                                          reg = ",";
+                                      }
+
                                       wordsarray=line.split(reg);
 
-                                      pw.println(wordsarray[id]+"\t"+wordsarray[dc]+"\t"+wordsarray[bc]+"\t"+wordsarray[pq]+"\t"+wordsarray[rq]);
+                                      //pw.println(wordsarray[id]+"\t"+wordsarray[dc]+"\t"+wordsarray[bc]+"\t"+wordsarray[pq]+"\t"+wordsarray[rq]);
+
+                                      pw.println(wordsarray[0]+"\t"+wordsarray[1]+"\t"+wordsarray[2]);
 
                                   }
                                   pw.flush();
@@ -231,20 +240,20 @@ public class SettingsFragment extends Fragment {
 
                 try {
                     File sdcard = Environment.getExternalStorageDirectory();
-                    File file = new File(sdcard,"TestPurchaseOrder.csv");
+                    File file = new File(sdcard,"TestPurchaseOrder.txt");
 
                     BufferedReader br = new BufferedReader(new FileReader(file));
                     String line;
-                    br.readLine();
+                    //br.readLine();
 
                     while ((line = br.readLine()) != null) {
                         String[] str = line.split("\t");
 
 //                        if(str.length == 5) {
 
-                            String Barcode = str[2];
+                            String Barcode = str[0];
                             String Description = str[1];
-                            Integer Received = Integer.parseInt(str[3]);
+                            Integer Received = Math.round(Float.parseFloat(str[2]));
                             Integer Released = 0;
 
                             db.insertData(Barcode,Description,Received,Released,0);
