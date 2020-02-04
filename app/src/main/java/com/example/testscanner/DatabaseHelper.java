@@ -116,7 +116,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     }
 
-    public Cursor LogData() {
+        public Cursor LogData() {
         SQLiteDatabase db = this.getReadableDatabase() ;
         String query = "SELECT * FROM "+LOG_TABLE;
         Cursor cursor = db.rawQuery(query, null);

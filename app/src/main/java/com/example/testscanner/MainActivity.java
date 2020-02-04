@@ -45,10 +45,13 @@ public class MainActivity extends AppCompatActivity
         navigationView = findViewById(R.id.nav_view);
 
 
-            currentfragt = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
-            logIn(new CheckFragment());
+//            currentfragt = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
+//            logIn(new CheckFragment());
+//
+//            settings = false;
 
-            settings = false;
+        CheckFragment fragment = new CheckFragment();
+        changeFragment(fragment);
             navigationView.setCheckedItem(R.id.nav_pricecheck);
 
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
@@ -115,8 +118,9 @@ public class MainActivity extends AppCompatActivity
 
         }
         else if (id == R.id.nav_settings) {
-                settings = true;
-                 logIn(new SettingsFragment());
+
+                 SettingsFragment fragment = new SettingsFragment();
+                 changeFragment(fragment);
 
         }
 

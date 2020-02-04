@@ -93,16 +93,16 @@ public class InventoryFragment extends Fragment {
                        // Set an EditText view to get user input
                        final EditText input = new EditText(getActivity());
                        final EditText adminun = new EditText(getActivity());
-                       final EditText adminpass = new EditText(getActivity());
+//                       final EditText adminpass = new EditText(getActivity());
                        input.setHint("IP Address");
                        input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_NORMAL);
                        layout.addView(input);
                        adminun.setHint("Username");
                        adminun.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_NORMAL);
                        layout.addView(adminun);
-                       adminpass.setHint("Password");
-                       adminpass.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
-                       layout.addView(adminpass);
+//                       adminpass.setHint("Password");
+//                       adminpass.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+//                       layout.addView(adminpass);
 
                        alert.setView(layout);
 
@@ -110,15 +110,15 @@ public class InventoryFragment extends Fragment {
                            public void onClick(DialogInterface dialog, int whichButton) {
                                String value = String.valueOf(input.getText());
                                String checkun = String.valueOf(adminun.getText());
-                               String checkpass = String.valueOf(adminpass.getText());
+//                               String checkpass = String.valueOf(adminpass.getText());
 
-                               if (checkun.equals("admin") && checkpass.equals("123456")) {
+                               if (checkun.equals("aquaplanet")) {
                                    inputtedIPAdd = value;
                                    sendGRToServer();
                                }
                                else {
                                    dialog.dismiss();
-                                   new toastview().toast("Wrong Username/Password!", getActivity()).show();
+                                   new toastview().toast("Wrong Username", getActivity()).show();
                                }
 
                            }
@@ -171,7 +171,7 @@ public class InventoryFragment extends Fragment {
 
 
 
-                listItem.add(cursor.getString(0) + "\t\t" + cursor.getString(1) + "\t\t\t\t\t"  + cursor.getString(3) + "\t\t\t\t\t\t" + cursor.getString(4) );
+                listItem.add(cursor.getString(1) + "\t\t\t\t\t"  + cursor.getString(3) + "\t\t\t\t\t\t" + cursor.getString(4) );
             }
 
             ArrayAdapter adapter = new ArrayAdapter<>(Objects.requireNonNull(this.getContext()), android.R.layout.simple_list_item_1, listItem);
