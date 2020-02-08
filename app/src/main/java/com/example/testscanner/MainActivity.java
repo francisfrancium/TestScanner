@@ -103,6 +103,13 @@ public class MainActivity extends AppCompatActivity
                  changeFragment(fragment);
              }
 
+             else if (id == R.id.nav_physcount) {
+
+                 CountFragment fragment = new CountFragment();
+                 changeFragment(fragment);
+
+             }
+
 
         else if (id == R.id.nav_receive) {
 
@@ -157,7 +164,7 @@ public class MainActivity extends AppCompatActivity
                     Toast.makeText(getApplicationContext(), "Welcome!", Toast.LENGTH_SHORT).show();
 
                     changeFragment(targetFragment);
-                }
+                       }
                 else {
                     x[0]++;
 

@@ -45,6 +45,8 @@ public class InventoryFragment extends Fragment {
 
     private String inputtedIPAdd;
 
+    public String trans;
+
 
 
     public InventoryFragment() {
@@ -164,6 +166,8 @@ public class InventoryFragment extends Fragment {
 
         if (!(cursor.getCount() ==0)) {
             listItem.add("ID\tItem\t\t\t\t\t\t\tP.O.\t\tReceived");
+            cursor.moveToNext();
+
             while (cursor.moveToNext()){
 
                 StringBuilder string = new StringBuilder();
@@ -188,7 +192,7 @@ public class InventoryFragment extends Fragment {
 
     private void savePOOnClick(){
 
-        final String FILENAME = "TestScannerGRReport.txt";
+        final String FILENAME = "TestScannerGRReport.csv";
 
         Cursor cursor = db.viewData();
 
@@ -202,10 +206,17 @@ public class InventoryFragment extends Fragment {
                 try {
                     FileOutputStream fos = new FileOutputStream(file);
 
-                    entry.append("ID").append(",").append("BARCODE").append(",").append("ITEM DESCRIPTION").append(",").append("PURCHASE QUANTITY").append(",").append("RECEIVED QUANTITY").append(",").append("VARIANCE").append("\n");
+                    cursor.moveToNext();
+
+                    trans = cursor.getString(7);
+
+                    if (trans.equals("P.O. NUMBER"))
+                    entry.append("ID").append(",").append("BARCODE").append(",").append("ITEM DESCRIPTION").append(",").append("PURCHASE QUANTITY").append(",").append("RECEIVED QUANTITY").append(",").append("VARIANCE").append(",").append("USER").append(",").append("P.O. NUMBER").append("\n");
+                    else
+                    entry.append("ID").append(",").append("BARCODE").append(",").append("ITEM DESCRIPTION").append(",").append("PURCHASE QUANTITY").append(",").append("RECEIVED QUANTITY").append(",").append("VARIANCE").append(",").append("USER").append(",").append("LOCATION").append("\n");
 
                     while (cursor.moveToNext()) {
-                        entry.append(cursor.getString(0)).append(",").append(cursor.getString(1)).append(",").append(cursor.getString(2)).append(",").append(cursor.getString(3)).append(",").append(cursor.getString(4)).append(",").append(cursor.getInt(4) - cursor.getInt(3)).append("\n");
+                        entry.append(cursor.getString(0)).append(",").append(cursor.getString(1)).append(",").append(cursor.getString(2)).append(",").append(cursor.getString(3)).append(",").append(cursor.getString(4)).append(",").append(cursor.getInt(4) - cursor.getInt(3)).append(",").append(cursor.getString(6)).append(",").append(cursor.getString(7)).append("\n");
                     }
                     fos.write(entry.toString().getBytes());
                     fos.close();
@@ -252,11 +263,15 @@ public class InventoryFragment extends Fragment {
 
 
                 DataOutputStream DOS = new DataOutputStream(sock.getOutputStream());
-                DOS.writeUTF("GR");
 
-                    // sendfile
+                if(trans.equals("P.O. NUMBER"))
+                DOS.writeUTF("GR");
+                else DOS.writeUTF("IM");
+
+
+                // sendfile
                     File sdcard = Environment.getExternalStorageDirectory();
-                File myFile = new File(sdcard,"TestScannerGRReport.txt");
+                File myFile = new File(sdcard,"TestScannerGRReport.csv");
 
                 byte [] mybytearray  = new byte [(int)myFile.length()];
                 FileInputStream fis = new FileInputStream(myFile);

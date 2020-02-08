@@ -18,28 +18,11 @@
         android:layout_marginTop="70dp"
         android:background="@drawable/inputbackground"
         android:elevation="6dp"
-        android:layout_toStartOf="@id/view_serial"
         android:text="Scan a Code"
         android:textSize="15dp"
         android:padding="15dp"
         android:layout_marginEnd="20dp"
         android:textColor="#000000"/>
-
-    <TextView
-        android:id="@+id/view_serial"
-        android:layout_width="120dp"
-        android:layout_height="250dp"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="70dp"
-        android:layout_alignParentEnd="true"
-        android:background="@drawable/inputbackground"
-        android:elevation="6dp"
-        android:textSize="15dp"
-        android:padding="15dp"
-        android:textColor="#000000"
-        android:scrollbars = "vertical"
-        android:gravity="bottom"
-        />
 
     <ScrollView
         android:id="@+id/scrll"
@@ -65,7 +48,7 @@
                 android:id="@+id/startcount"
                 android:layout_width="200dp"
                 android:layout_height="40dp"
-                android:layout_alignTop="@id/input_count_serialno"
+                android:layout_alignTop="@id/input_count"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="70dp"
                 android:background="@drawable/rounded"
@@ -85,56 +68,33 @@
                 android:text="End Count"
                 android:elevation="6dp"/>
 
-            <Button
-                android:id="@+id/newitem"
-                android:layout_width="100dp"
-                android:layout_height="40dp"
-                android:layout_alignTop="@id/input_count_user"
-                android:layout_alignEnd="@+id/serialoption"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="140dp"
-                android:background="@drawable/rounded"
-                android:elevation="6dp"
-                android:text="New Item" />
-
-            <Switch
-                android:id="@+id/serialoption"
-                android:layout_width="100dp"
-                android:layout_height="40dp"
-                android:layout_alignTop="@id/input_count_user"
-                android:layout_alignEnd="@id/input_count_user"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="70dp"
-                android:text="Serial No."
-                />
-
-             <EditText
-                android:id="@+id/input_count_serialno"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_alignTop="@+id/input_count"
-                android:layout_alignStart="@+id/input_count"
-                android:layout_marginTop="70dp"
-                android:layout_toStartOf="@id/newitem"
-                android:background="@drawable/inputbackground"
-                android:hint="Serial No."
-                android:singleLine="true"
-                android:inputType="text"
-                android:padding="10dp"
-                android:elevation="6dp"/>
-
             <EditText
                 android:id="@+id/input_count"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_alignTop="@+id/input_count_location"
-               android:layout_toStartOf="@id/serialoption"
+                android:layout_toStartOf="@id/input_qty"
                 android:layout_marginTop="70dp"
                 android:background="@drawable/inputbackground"
                 android:singleLine="true"
                 android:hint="Barcode"
                 android:inputType="text"
                 android:padding="10dp"
+                android:elevation="6dp"/>
+
+            <EditText
+                android:id="@+id/input_qty"
+                android:layout_width="100dp"
+                android:layout_height="40dp"
+                android:layout_alignTop="@+id/input_count_user"
+                android:layout_marginTop="70dp"
+                android:background="@drawable/inputbackground"
+                android:singleLine="true"
+                android:hint="Quantity"
+                android:inputType="text"
+                android:layout_marginStart="20dp"
+                android:padding="10dp"
+                android:layout_alignParentEnd="true"
                 android:elevation="6dp"/>
 
 

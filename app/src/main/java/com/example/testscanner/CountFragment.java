@@ -2,6 +2,8 @@ package com.example.testscanner;
 
 
 
+        import android.annotation.SuppressLint;
+        import android.database.Cursor;
         import android.os.Bundle;
 
 
@@ -23,6 +25,8 @@ package com.example.testscanner;
 
         import com.google.android.material.snackbar.Snackbar;
 
+        import java.text.SimpleDateFormat;
+        import java.util.Date;
         import java.util.HashSet;
         import java.util.Objects;
         import java.util.Set;
@@ -35,22 +39,22 @@ public class CountFragment extends Fragment {
 
     private EditText editTextBarc ;
     private EditText editTextLoc;
-    private EditText editTextSer;
     private EditText editTextUs;
+    private EditText editTextQty;
 
     private ScrollView scrll;
 
     private TextView textViewA;
-    private TextView textViewB;
 
     private  Button startcount;
     private  Button endcount;
-    private   Button newitem;
+    private DatabaseHelper db;
 
-    private   Switch serialopt;
+    public static   String inputed;
 
-    private   String inputed;
-    private   String inputedLocation;
+    private int[] currentcount = new int[10000];
+    private int inputedQty;
+    public static   String inputedLocation;
     private   String inputedSerial;
     private String inputedUser;
 
@@ -59,6 +63,10 @@ public class CountFragment extends Fragment {
     private Set<String> setchecker;
 
     private  String ser = "<font color = 'red'> SERIAL NO.:</font>" ;
+    private String barcode = "<font color = 'red'> BARCODE:</font>" ;
+    private String item = "<font color = '#4f4f4f'> ITEM DESCRIPTION:</font>" ;
+    private String rcv = "<font color = '#4f4f4f'> CURRENT IN ITEM MASTER:</font>" ;
+
 
 
     public CountFragment() {
@@ -73,20 +81,15 @@ public class CountFragment extends Fragment {
         View inflate = inflater.inflate(R.layout.fragment_count, container, false);
         editTextBarc = inflate.findViewById(R.id.input_count);
         editTextLoc = inflate.findViewById(R.id.input_count_location);
-        editTextSer = inflate.findViewById(R.id.input_count_serialno);
         editTextUs = inflate.findViewById(R.id.input_count_user);
+        editTextQty = inflate.findViewById(R.id.input_qty);
+        db = new DatabaseHelper(this.getContext());
 
 
         scrll = inflate.findViewById(R.id.scrll);
-
-        serialopt = inflate.findViewById(R.id.serialoption);
-
-        newitem = inflate.findViewById(R.id.newitem);
         startcount = inflate.findViewById(R.id.startcount);
         endcount = inflate.findViewById(R.id.endcount);
         textViewA = inflate.findViewById(R.id.view_count);
-        textViewB = inflate.findViewById(R.id.view_serial);
-        textViewB.setMovementMethod(new ScrollingMovementMethod());
 
 
         Objects.requireNonNull(getActivity()).setTitle("Physical Count");
@@ -98,10 +101,8 @@ public class CountFragment extends Fragment {
 
         clearView();
         editTextBarc.setEnabled(false);
-        editTextSer.setEnabled(false);
+        editTextQty.setEnabled(false);
         endcount.setEnabled(false);
-        newitem.setEnabled(false);
-
         barcodeonly();
 
 
@@ -122,40 +123,6 @@ public class CountFragment extends Fragment {
                 return true;
             }
         });
-
-        newitem.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-
-
-                newitem.setEnabled(false);
-                editTextSer.setEnabled(false);
-                editTextBarc.setText("");
-                editTextBarc.setEnabled(true);
-                editTextBarc.requestFocus();
-                textViewB.setText(Html.fromHtml(ser));
-            }
-        });
-
-
-        serialopt.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(((CompoundButton) view).isChecked()){
-
-
-                    editTextSer.setText("");
-                    askserialnumber();
-                } else {
-                    editTextSer.setText("N/A");
-                    barcodeonly();
-                }
-            }
-        });
-
-
-
 
 
         startcount.setOnClickListener(new View.OnClickListener() {
@@ -188,10 +155,11 @@ public class CountFragment extends Fragment {
                     editTextUs.setEnabled(false);
                     editTextBarc.requestFocus();
                     editTextBarc.setEnabled(true);
+                    editTextQty.setEnabled(true);
                     editTextLoc.setEnabled(false);
                     startcount.setEnabled(false);
                     endcount.setEnabled(true);
-                    serialopt.setEnabled(false);
+                    editTextQty.setText("1");
 
                 }
 
@@ -206,24 +174,19 @@ public class CountFragment extends Fragment {
 
                 scrll.fullScroll(ScrollView.FOCUS_UP);
 
-                newitem.setEnabled(false);
 
                 startcount.setEnabled(true);
                 endcount.setEnabled(false);
 
                 editTextUs.setEnabled(true);
                 editTextBarc.setEnabled(false);
-                editTextSer.setEnabled(false);
                 editTextLoc.setEnabled(true);
 
-                serialopt.setEnabled(true);
 
                 editTextLoc.requestFocus();
 
-                textViewB.setText("");
                 editTextLoc.setText("");
                 editTextBarc.setText("");
-                editTextSer.setText("");
                 inputed = "";
                 inputedSerial = "";
                 inputedLocation = "";
@@ -246,6 +209,44 @@ public class CountFragment extends Fragment {
         return inflate;
     }
 
+
+    private void UpdateReceivedData() {
+
+        Cursor cursor = db.validateTaggedData();
+
+        if (!(cursor.moveToFirst()) || cursor.getCount() == 0) {
+            new toastview().toast("Failed! Item not Found!", getActivity()).show();
+
+            clearView();
+
+
+        } else {
+            for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
+                new toastview().toast("Received Success!", getActivity()).show();
+                //db.updateReceivedData(inputed, cursor.getInt(3) + 1);
+                textViewA.setText(Html.fromHtml(barcode));
+                textViewA.append("\n" + cursor.getString(1) + "\n\n");
+                textViewA.append(Html.fromHtml(item));
+                textViewA.append("\n"  + cursor.getString(2)  +"\n\n");
+                textViewA.append(Html.fromHtml(rcv));
+                textViewA.append("\n" + (cursor.getInt(3)) + "\n");
+                currentcount[cursor.getInt(0)] = currentcount[cursor.getInt(0)] + inputedQty;
+                @SuppressLint("SimpleDateFormat") SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+                String date = sdf.format(new Date());
+
+                db.logInsert(inputed, "Received", date);
+                textViewA.append("RECEIVED QUANTITY:\n\t"   + currentcount[cursor.getInt(0)] + "\n");
+                db.updateMasterData(inputed, currentcount[cursor.getInt(0)], inputedUser, inputedLocation);
+
+            }
+        }
+    }
+
+
+
+
+
+
     private void clearView(){
 
         String barcode = "<font color = 'red'> BARCODE:</font>";
@@ -261,75 +262,6 @@ public class CountFragment extends Fragment {
 
     }
 
-
-    private void askserialnumber(){
-        editTextBarc.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_GO || actionId == EditorInfo.IME_ACTION_NEXT
-                        || actionId == EditorInfo.IME_ACTION_DONE
-                        || event.getAction() == KeyEvent.ACTION_UP && event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
-
-                    textViewB.setText(Html.fromHtml(ser));
-                    editTextBarc.clearFocus();
-                    editTextSer.setEnabled(true);
-                    serialopt.setEnabled(false);
-                    newitem.setEnabled(true);
-                    editTextBarc.setEnabled(false);
-
-
-                    editTextSer.requestFocus();
-                    editTextSer.setCursorVisible(true);
-
-
-
-
-
-                    inputedLocation = editTextLoc.getText().toString();
-                    inputed = editTextBarc.getText().toString();
-                    setchecker = new HashSet<>();
-
-
-
-                }
-                return true;
-            }
-        });
-        editTextSer.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_GO || actionId == EditorInfo.IME_ACTION_NEXT
-                        || actionId == EditorInfo.IME_ACTION_DONE
-                        || event.getAction() == KeyEvent.ACTION_DOWN && event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
-
-                    inputed = editTextBarc.getText().toString();
-                    inputedLocation = editTextLoc.getText().toString();
-                    inputedSerial = editTextSer.getText().toString();
-                    inputedUser = editTextUs.getText().toString();
-                    clearView();
-                    editTextSer.setText("");
-                    editTextSer.requestFocus();
-
-
-                    if (setchecker.contains(inputedSerial)){
-                        textViewB.append("\n");
-                        textViewB.append(Html.fromHtml("<font color = 'red'>" + inputedSerial +"</font>"));
-                        Snackbar.make(Objects.requireNonNull(getActivity().getCurrentFocus()), "Duplicate Serial No.", Snackbar.LENGTH_LONG)
-                                .setAction("Action", null).show();
-                    }
-                    else{
-                        setchecker.add(inputedSerial);
-                        textViewB.append("\n"+inputedSerial);
-                    }
-
-
-                }
-                return true;
-            }
-        });
-
-    }
-
     private void barcodeonly(){
 
         editTextBarc.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -341,9 +273,11 @@ public class CountFragment extends Fragment {
 
                     inputed = editTextBarc.getText().toString();
                     inputedLocation = editTextLoc.getText().toString();
-                    inputedSerial = editTextSer.getText().toString();
+                    inputedUser = editTextUs.getText().toString();
+                    inputedQty = Integer.parseInt(editTextQty.getText().toString());
 
-                    clearView();
+                    UpdateReceivedData();
+                    //clearView();
 
                     editTextBarc.setText("");
                     editTextBarc.requestFocus();
@@ -351,10 +285,6 @@ public class CountFragment extends Fragment {
                 return true;
             }
         });
-
-
-
-
 
     }
 

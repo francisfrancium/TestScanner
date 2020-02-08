@@ -15,7 +15,7 @@
         android:layout_centerHorizontal="true"
         android:background="@drawable/rounded"
         android:elevation="6dp"
-        android:text="Purchase Order\nFile" />
+        android:text="Upload New\nFile" />
 
 
 </RelativeLayout>

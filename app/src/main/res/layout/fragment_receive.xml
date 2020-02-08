@@ -40,15 +40,52 @@
         android:layout_centerHorizontal="true"
         android:layout_below="@id/view_POtable">
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="50dp"
+            android:paddingHorizontal="20dp">
+
+
+
             <EditText
                 android:id="@+id/input_receiving"
-                android:layout_width="300dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="50dp"
+                android:layout_marginTop="80dp"
                 android:inputType="text"
+                android:layout_alignTop="@id/input_rec_user"
                 android:hint="Barcode"
                 android:background="@drawable/inputbackground"
                 android:padding="10dp"
+                />
+
+            <EditText
+                android:id="@+id/input_rec_user"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/inputbackground"
+                android:hint="User"
+                android:singleLine="true"
+                android:inputType="text"
+                android:layout_marginEnd="20dp"
+                android:padding="10dp"
+                android:layout_toStartOf="@id/input_rec_qty"
+                android:elevation="6dp"
+                />
+
+            <EditText
+                android:id="@+id/input_rec_qty"
+                android:layout_width="100dp"
+                android:layout_height="40dp"
+                android:background="@drawable/inputbackground"
+                android:hint="Quantity"
+                android:layout_marginTop="20dp"
+                android:inputType="text"
+                android:padding="10dp"
+                android:layout_alignParentEnd="true"
+                android:elevation="6dp"
                 />
 
             <!--
@@ -63,6 +100,19 @@
                 android:elevation="6dp"
                 android:text="Complete\nReceiving" />
         -->
+
+
+
+
+
+
+
+
+
+
+        </RelativeLayout>
+
+
 
     </ScrollView>
 </RelativeLayout>

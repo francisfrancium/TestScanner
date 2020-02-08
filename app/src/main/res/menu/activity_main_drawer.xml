@@ -10,11 +10,11 @@
             android:icon="@drawable/price_check"
             android:title="@string/pricecheck" />
 
-<!--        <item-->
-<!--            android:id="@+id/nav_physcount"-->
-<!--            android:icon="@drawable/storage"-->
-<!--            android:title="@string/physcount"-->
-<!--            />-->
+        <item
+            android:id="@+id/nav_physcount"
+            android:icon="@drawable/storage"
+            android:title="@string/physcount"
+            />
 
 
         <item

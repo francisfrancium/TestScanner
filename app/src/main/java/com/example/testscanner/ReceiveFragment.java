@@ -28,11 +28,13 @@ public class ReceiveFragment extends Fragment {
     private TextView textViewBC;
     private TextView textViewPO;
     static String inputed;
-    private int[] currentcount = new int[100];
+    private int[] currentcount = new int[10000];
+    private int inputedQty;
+    private String inputedUser;
 
     private String barcode = "<font color = 'red'> BARCODE:</font>" ;
     private String item = "<font color = '#4f4f4f'> ITEM DESCRIPTION:</font>" ;
-    private String rcv = "<font color = '#4f4f4f'> CURRENT IN INVENTORY:</font>" ;
+    private String rcv = "<font color = '#4f4f4f'> PURCHASE ORDER COUNT:</font>" ;
 
     public ReceiveFragment() {
         // Required empty public constructor

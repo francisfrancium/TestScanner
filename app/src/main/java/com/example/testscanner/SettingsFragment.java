@@ -91,7 +91,7 @@ public class SettingsFragment extends Fragment {
 
                               File sdcard = Environment.getExternalStorageDirectory();
 
-                              File myFile = new File(sdcard,"TestPurchaseOrder.txt");
+                              File myFile = new File(sdcard,"TestPurchaseOrder.csv");
 
                               final BufferedReader br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                               final PrintWriter pw = new PrintWriter(new FileWriter(myFile));
@@ -138,21 +138,21 @@ public class SettingsFragment extends Fragment {
 //                                      br.readLine();
 
                                   for (line = br.readLine(); line != null; line = br.readLine()){
-                                      if (line.contains("\t")){
-                                          reg = "\t";
-                                      }
-                                      else if (line.contains(";")){
-                                          reg = ";";
-                                      }
-                                      else{
-                                          reg = ",";
-                                      }
+//                                      if (line.contains("\t")){
+//                                          reg = "\t";
+//                                      }
+//                                      else if (line.contains(";")){
+//                                          reg = ";";
+//                                      }
+//                                      else{
+//                                          reg = ",";
+//                                      }
 
-                                      wordsarray=line.split(reg);
+//                                      wordsarray=line.split(reg);
 
                                       //pw.println(wordsarray[id]+"\t"+wordsarray[dc]+"\t"+wordsarray[bc]+"\t"+wordsarray[pq]+"\t"+wordsarray[rq]);
 
-                                      pw.println(wordsarray[0]+"\t"+wordsarray[1]+"\t"+wordsarray[2]);
+                                      pw.println(line);
 
                                   }
                                   pw.flush();
@@ -240,14 +240,23 @@ public class SettingsFragment extends Fragment {
 
                 try {
                     File sdcard = Environment.getExternalStorageDirectory();
-                    File file = new File(sdcard,"TestPurchaseOrder.txt");
+                    File file = new File(sdcard,"TestPurchaseOrder.csv");
 
                     BufferedReader br = new BufferedReader(new FileReader(file));
                     String line;
-                    //br.readLine();
+                    line = br.readLine();
+                    String[] str;
+                    str = line.split(",");
+
+                    if (str[3].equals("P.O. NUMBER"))
+                    db.insertData("BARCODE","DESCRIPTION",0,0,0, "USER", "P.O. NUMBER");
+                    else
+                        db.insertData("BARCODE","DESCRIPTION",0,0,0, "USER", "LOCATION");
+
+
 
                     while ((line = br.readLine()) != null) {
-                        String[] str = line.split("\t");
+                        str = line.split(",");
 
 //                        if(str.length == 5) {
 
@@ -255,8 +264,9 @@ public class SettingsFragment extends Fragment {
                             String Description = str[1];
                             Integer Received = Math.round(Float.parseFloat(str[2]));
                             Integer Released = 0;
+                            String PONum = str[3];
 
-                            db.insertData(Barcode,Description,Received,Released,0);
+                            db.insertData(Barcode,Description,Received,Released,0, "User", PONum);
 
                             new toastview().toast("New Purchase Order File Uploaded!", getActivity()).show();
 //                        }
