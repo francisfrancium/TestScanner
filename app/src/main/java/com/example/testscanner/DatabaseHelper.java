@@ -95,12 +95,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
 
-    public boolean updateReceivedData(String Barcode, Integer Received ){
+    public boolean updateReceivedData(String Barcode, Integer Received, String User ){
 
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(COL_2, Barcode);
         contentValues.put(COL_5, Received);
+        contentValues.put(COL_7, User);
 
 
         db.update(TABLE_NAME, contentValues, COL_2 + " = ? ",new String[] {Barcode} );

@@ -24,6 +24,8 @@ import java.util.Objects;
 public class ReceiveFragment extends Fragment {
 
     private EditText editText ;
+    private EditText editTextRUs ;
+    private EditText editTextRQty ;
     private DatabaseHelper db;
     private TextView textViewBC;
     private TextView textViewPO;
@@ -48,6 +50,8 @@ public class ReceiveFragment extends Fragment {
         textViewBC = inflate.findViewById(R.id.view_recieve);
         textViewPO = inflate.findViewById(R.id.view_POtable);
         editText = inflate.findViewById(R.id.input_receiving);
+        editTextRUs = inflate.findViewById(R.id.input_rec_user);
+        editTextRQty = inflate.findViewById(R.id.input_rec_qty);
         db = new DatabaseHelper(this.getContext());
 
         Objects.requireNonNull(getActivity()).setTitle("Receiving");
@@ -64,6 +68,8 @@ public class ReceiveFragment extends Fragment {
                         || event.getAction() == KeyEvent.ACTION_DOWN && event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
 
                     inputed = editText.getText().toString();
+                    inputedUser = editTextRUs.getText().toString();
+                    inputedQty = Integer.parseInt(editTextRQty.getText().toString());
 
                     UpdateReceivedData();
 
@@ -99,13 +105,13 @@ public class ReceiveFragment extends Fragment {
                 textViewBC.append("\n"  + cursor.getString(2)  +"\n\n");
                 textViewBC.append(Html.fromHtml(rcv));
                 textViewBC.append("\n" + (cursor.getInt(3)) + "\n");
-                currentcount[cursor.getInt(0)]++;
+                currentcount[cursor.getInt(0)] = currentcount[cursor.getInt(0)]+ inputedQty ;
                 @SuppressLint("SimpleDateFormat") SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
                 String date = sdf.format(new Date());
 
                 db.logInsert(inputed, "Received", date);
                 textViewPO.setText("RECEIVED QUANTITY:\n\t"   + currentcount[cursor.getInt(0)] + "\n");
-                db.updateReceivedData(inputed, currentcount[cursor.getInt(0)]);
+                db.updateReceivedData(inputed, currentcount[cursor.getInt(0)], inputedUser);
 
             }
         }

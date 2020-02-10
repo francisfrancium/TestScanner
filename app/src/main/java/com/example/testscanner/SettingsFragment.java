@@ -268,7 +268,7 @@ public class SettingsFragment extends Fragment {
 
                             db.insertData(Barcode,Description,Received,Released,0, "User", PONum);
 
-                            new toastview().toast("New Purchase Order File Uploaded!", getActivity()).show();
+                            new toastview().toast("New File Uploaded!", getActivity()).show();
 //                        }
 //                        else {
 //                            new toastview().toast("Upload Failed.", getActivity()).show();

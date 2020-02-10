@@ -165,7 +165,7 @@ public class InventoryFragment extends Fragment {
         Cursor cursor = db.viewData();
 
         if (!(cursor.getCount() ==0)) {
-            listItem.add("ID\tItem\t\t\t\t\t\t\tP.O.\t\tReceived");
+            listItem.add("ID\tItem\t\t\tSystem Qty.\t\tScanned");
             cursor.moveToNext();
 
             while (cursor.moveToNext()){

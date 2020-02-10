@@ -30,8 +30,8 @@ public class CheckFragment extends Fragment {
     private String ID = "<font color = '#4f4f4f'> ID NUMBER:</font>" ;
     private String barcode = "<font color = 'red'> BARCODE:</font>" ;
     private String item = "<font color = '#4f4f4f'> ITEM DESCRIPTION:</font>" ;
-    private  String rcv = "<font color = '#4f4f4f'> PURCHASE ORDER:</font>" ;
-    private String rls = "<font color = '#4f4f4f'> RECEIVED COUNT:</font>" ;
+    private  String rcv = "<font color = '#4f4f4f'> SYSTEM QUANTITY:</font>" ;
+    private String rls = "<font color = '#4f4f4f'> SCANNED COUNT:</font>" ;
 
     public CheckFragment() {
 
