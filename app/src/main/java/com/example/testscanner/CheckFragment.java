@@ -49,6 +49,7 @@ public class CheckFragment extends Fragment {
 
         Objects.requireNonNull(getActivity()).setTitle("Item Check");
 
+
         inputed = "--------------------";
         editText.requestFocus();
 
@@ -91,9 +92,7 @@ public class CheckFragment extends Fragment {
                 new toastview().toast("Item Found!", getActivity()).show();
                 // The Cursor is now set to the right position
 
-                textViewID.setText(Html.fromHtml(ID));
-                textViewID.append("\n" + cursor.getString(0) + "\n\n");
-                textViewID.append(Html.fromHtml(barcode));
+                textViewID.setText(Html.fromHtml(barcode));
                 textViewID.append("\n" + cursor.getString(1) + "\n\n");
                 textViewID.append(Html.fromHtml(item));
                 textViewID.append("\n" + cursor.getString(2) + "\n\n");
@@ -107,9 +106,7 @@ public class CheckFragment extends Fragment {
     }
 
     private void clearView(){
-        textViewID.setText(Html.fromHtml(ID));
-        textViewID.append("\n--------------------\n\n");
-        textViewID.append(Html.fromHtml(barcode));
+        textViewID.setText(Html.fromHtml(barcode));
         textViewID.append("\n"+inputed+"\n\n");
         textViewID.append(Html.fromHtml(item));
         textViewID.append("\n--------------------\n\n");

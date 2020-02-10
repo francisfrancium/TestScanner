@@ -8,5 +8,6 @@
     <color name="abztrakColor">#d33f2c</color>
     <color name="lightorange">#e99f96</color>
     <color name="white">#ffffff</color>
+    <color name="red">#FF0000</color>
 
 </resources>

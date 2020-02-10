@@ -260,13 +260,13 @@ public class SettingsFragment extends Fragment {
 
 //                        if(str.length == 5) {
 
-                            String Barcode = str[0];
-                            String Description = str[1];
+                            String Barcode = str[0].trim();
+                            String Description = str[1].trim();
                             Integer Received = Math.round(Float.parseFloat(str[2]));
                             Integer Released = 0;
-                            String PONum = str[3];
+                            String LastCol = str[3].trim();
 
-                            db.insertData(Barcode,Description,Received,Released,0, "User", PONum);
+                            db.insertData(Barcode,Description,Received,Released,0, "User", LastCol);
 
                             new toastview().toast("New File Uploaded!", getActivity()).show();
 //                        }

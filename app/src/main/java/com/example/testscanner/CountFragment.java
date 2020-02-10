@@ -66,6 +66,7 @@ public class CountFragment extends Fragment {
     private String barcode = "<font color = 'red'> BARCODE:</font>" ;
     private String item = "<font color = '#4f4f4f'> ITEM DESCRIPTION:</font>" ;
     private String rcv = "<font color = '#4f4f4f'> CURRENT IN ITEM MASTER:</font>" ;
+    public String scn = "<font color = '#4f4f4f'> SCANNED QUANTITY:</font>" ;
 
 
 
@@ -112,7 +113,7 @@ public class CountFragment extends Fragment {
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_GO || actionId == EditorInfo.IME_ACTION_NEXT
                         || actionId == EditorInfo.IME_ACTION_DONE
-                        || event.getAction() == KeyEvent.ACTION_DOWN || event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
+                        || event.getAction() == KeyEvent.ACTION_DOWN || event.getAction() == KeyEvent.KEYCODE_ENTER) {
 
                     inputedLocation = editTextLoc.getText().toString();
                     editTextUs.requestFocus();
@@ -123,6 +124,22 @@ public class CountFragment extends Fragment {
                 return true;
             }
         });
+
+
+        editTextQty.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_GO || actionId == EditorInfo.IME_ACTION_NEXT
+                        || actionId == EditorInfo.IME_ACTION_DONE
+                        || event.getAction() == KeyEvent.ACTION_DOWN || event.getAction() == KeyEvent.KEYCODE_ENTER ) {
+                    editTextBarc.requestFocus();
+
+                }
+                return true;
+            }
+        });
+
+
 
 
         startcount.setOnClickListener(new View.OnClickListener() {
@@ -222,7 +239,7 @@ public class CountFragment extends Fragment {
 
         } else {
             for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
-                new toastview().toast("Received Success!", getActivity()).show();
+                //new toastview().toast("Received Success!", getActivity()).show();
                 //db.updateReceivedData(inputed, cursor.getInt(3) + 1);
                 textViewA.setText(Html.fromHtml(barcode));
                 textViewA.append("\n" + cursor.getString(1) + "\n\n");
@@ -235,7 +252,7 @@ public class CountFragment extends Fragment {
                 String date = sdf.format(new Date());
 
                 db.logInsert(inputed, "Received", date);
-                textViewA.append("RECEIVED QUANTITY:\n\t"   + currentcount[cursor.getInt(0)] + "\n");
+                textViewA.append(Html.fromHtml(scn)+ "\n"   + currentcount[cursor.getInt(0)] + "\n");
                 db.updateMasterData(inputed, currentcount[cursor.getInt(0)], inputedUser, inputedLocation);
 
             }
@@ -249,15 +266,15 @@ public class CountFragment extends Fragment {
 
     private void clearView(){
 
+        String loc = "<font color = '#4f4f4f'> LOCATION:</font>";
+        textViewA.setText(Html.fromHtml(loc));
+        textViewA.append("\n"+inputedLocation+"\n\n");
         String barcode = "<font color = 'red'> BARCODE:</font>";
-        textViewA.setText(Html.fromHtml(barcode));
+        textViewA.append(Html.fromHtml(barcode));
         textViewA.append("\n"+inputed+"\n\n");
         String item = "<font color = '#4f4f4f'> ITEM DESCRIPTION:</font>";
         textViewA.append(Html.fromHtml(item));
-        textViewA.append("\n--------------------\n\n");
-        String loc = "<font color = '#4f4f4f'> LOCATION:</font>";
-        textViewA.append(Html.fromHtml(loc));
-        textViewA.append("\n"+inputedLocation+"\n\n");
+
 
 
     }

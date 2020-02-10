@@ -56,6 +56,7 @@ public class ReceiveFragment extends Fragment {
 
         Objects.requireNonNull(getActivity()).setTitle("Receiving");
         inputed = "--------------------";
+        editTextRQty.setText("1");
 
         clearView();
 
@@ -104,7 +105,7 @@ public class ReceiveFragment extends Fragment {
                 textViewBC.append(Html.fromHtml(item));
                 textViewBC.append("\n"  + cursor.getString(2)  +"\n\n");
                 textViewBC.append(Html.fromHtml(rcv));
-                textViewBC.append("\n" + (cursor.getInt(3)) + "\n");
+                textViewBC.append("\t" + (cursor.getInt(3)) );
                 currentcount[cursor.getInt(0)] = currentcount[cursor.getInt(0)]+ inputedQty ;
                 @SuppressLint("SimpleDateFormat") SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
                 String date = sdf.format(new Date());

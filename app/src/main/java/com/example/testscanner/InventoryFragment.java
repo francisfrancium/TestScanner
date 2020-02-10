@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -39,9 +40,13 @@ import java.util.Objects;
 public class InventoryFragment extends Fragment {
 
     private DatabaseHelper db;
-    private ListView userlist;
+    private TextView userlist;
+    private TextView userlist2;
+    private TextView userlist3;
 
     private ArrayList<String> listItem;
+    private ArrayList<String> listItem2;
+    private ArrayList<String> listItem3;
 
     private String inputtedIPAdd;
 
@@ -64,7 +69,11 @@ public class InventoryFragment extends Fragment {
 
         db = new DatabaseHelper(this.getContext());
         listItem = new ArrayList<>();
+        listItem2 = new ArrayList<>();
+        listItem3 = new ArrayList<>();
         userlist = inflate.findViewById(R.id.inventory);
+        userlist2 = inflate.findViewById(R.id.inventory_sqty);
+        userlist3 = inflate.findViewById(R.id.inventory_scanned);
         Button sendinven = inflate.findViewById(R.id.sendinven_button);
 
         Objects.requireNonNull(getActivity()).setTitle("Inventory");
@@ -165,7 +174,13 @@ public class InventoryFragment extends Fragment {
         Cursor cursor = db.viewData();
 
         if (!(cursor.getCount() ==0)) {
-            listItem.add("ID\tItem\t\t\tSystem Qty.\t\tScanned");
+//            listItem.add("Item");
+//            listItem2.add("System Qty.");
+//            listItem3.add("Scanned");
+
+            userlist.setText("------------------------------------------------------\n");
+            userlist2.setText("--------------\n");
+            userlist3.setText("---------------\n");
             cursor.moveToNext();
 
             while (cursor.moveToNext()){
@@ -173,13 +188,47 @@ public class InventoryFragment extends Fragment {
                 StringBuilder string = new StringBuilder();
 
 
+                userlist.append(cursor.getString(1) + "\n" );
 
 
-                listItem.add(cursor.getString(1) + "\t\t\t\t\t"  + cursor.getString(3) + "\t\t\t\t\t\t" + cursor.getString(4) );
+                if (cursor.getString(2).length() > 65) {
+                    userlist.append(cursor.getString(2).substring(0,64) + "\n");
+                    userlist2.append(cursor.getString(3) + "\n\n\n\n\n");
+                    userlist3.append(cursor.getString(4) + "\n\n\n\n\n");
+                }
+                else if (cursor.getString(2).length() > 45) {
+                    userlist.append(cursor.getString(2) + "\n");
+                    userlist2.append(cursor.getString(3) + "\n\n\n\n");
+                    userlist3.append(cursor.getString(4) + "\n\n\n\n");
+                }
+
+                else if (cursor.getString(2).length() > 25) {
+                    userlist.append(cursor.getString(2) + "\n");
+                    userlist2.append(cursor.getString(3) + "\n\n\n");
+                    userlist3.append(cursor.getString(4) + "\n\n\n");
+                }
+                else {
+                    userlist.append(cursor.getString(2) + "\n");
+                    userlist2.append(cursor.getString(3) + "\n\n");
+                    userlist3.append(cursor.getString(4) + "\n\n");
+                }
+
+                userlist.append("------------------------------------------------------\n");
+                userlist2.append("--------------\n");
+                userlist3.append("---------------\n");
+
+//                listItem.add(cursor.getString(1) );
+//                listItem2.add(cursor.getString(3));
+//                listItem3.add(cursor.getString(4) );
             }
 
-            ArrayAdapter adapter = new ArrayAdapter<>(Objects.requireNonNull(this.getContext()), android.R.layout.simple_list_item_1, listItem);
-            userlist.setAdapter(adapter);
+//            ArrayAdapter adapter = new ArrayAdapter<>(Objects.requireNonNull(this.getContext()), android.R.layout.simple_list_item_1, listItem);
+//            userlist.setAdapter(adapter);
+//
+//            ArrayAdapter adapter2 = new ArrayAdapter<>(Objects.requireNonNull(this.getContext()), android.R.layout.simple_list_item_2, listItem);
+//            userlist2.setAdapter(adapter2);
+//            ArrayAdapter adapter3 = new ArrayAdapter<>(Objects.requireNonNull(this.getContext()), android.R.layout.simple_list_item_1, listItem);
+//            userlist3.setAdapter(adapter3);
 
             new toastview().toast("Data Loaded!", getActivity()).show();
 
@@ -211,12 +260,12 @@ public class InventoryFragment extends Fragment {
                     trans = cursor.getString(7);
 
                     if (trans.equals("P.O. NUMBER"))
-                    entry.append("ID").append(",").append("BARCODE").append(",").append("ITEM DESCRIPTION").append(",").append("PURCHASE QUANTITY").append(",").append("RECEIVED QUANTITY").append(",").append("VARIANCE").append(",").append("USER").append(",").append("P.O. NUMBER").append("\n");
+                    entry.append("BARCODE").append(",").append("ITEM DESCRIPTION").append(",").append("PURCHASE QUANTITY").append(",").append("RECEIVED QUANTITY").append(",").append("VARIANCE").append(",").append("USER").append(",").append("P.O. NUMBER").append("\n");
                     else
-                    entry.append("ID").append(",").append("BARCODE").append(",").append("ITEM DESCRIPTION").append(",").append("PURCHASE QUANTITY").append(",").append("RECEIVED QUANTITY").append(",").append("VARIANCE").append(",").append("USER").append(",").append("LOCATION").append("\n");
+                    entry.append("BARCODE").append(",").append("ITEM DESCRIPTION").append(",").append("SYSTEM QUANTITY").append(",").append("SCANNED QUANTITY").append(",").append("VARIANCE").append(",").append("USER").append(",").append("LOCATION").append("\n");
 
                     while (cursor.moveToNext()) {
-                        entry.append(cursor.getString(0)).append(",").append(cursor.getString(1)).append(",").append(cursor.getString(2)).append(",").append(cursor.getString(3)).append(",").append(cursor.getString(4)).append(",").append(cursor.getInt(4) - cursor.getInt(3)).append(",").append(cursor.getString(6)).append(",").append(cursor.getString(7)).append("\n");
+                        entry.append(cursor.getString(1)).append(",").append(cursor.getString(2)).append(",").append(cursor.getString(3)).append(",").append(cursor.getString(4)).append(",").append(cursor.getInt(4) - cursor.getInt(3)).append(",").append(cursor.getString(6)).append(",").append(cursor.getString(7)).append("\n");
                     }
                     fos.write(entry.toString().getBytes());
                     fos.close();

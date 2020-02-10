@@ -2,6 +2,7 @@ package com.example.testscanner;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.database.Cursor;
 import android.os.Bundle;
 import androidx.core.view.GravityCompat;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -29,10 +30,12 @@ import androidx.fragment.app.FragmentTransaction;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    Fragment currentfragt;
+
     boolean settings;
+    private DatabaseHelper db;
 
     private NavigationView navigationView;
+    Fragment currentfragt;
 
 
 
@@ -43,12 +46,13 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         navigationView = findViewById(R.id.nav_view);
+        db = new DatabaseHelper(this);
 
 
-//            currentfragt = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
-//            logIn(new CheckFragment());
-//
-//            settings = false;
+            //currentfragt = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
+            //logIn(new CheckFragment());
+
+            settings = false;
 
         CheckFragment fragment = new CheckFragment();
         changeFragment(fragment);
@@ -105,16 +109,85 @@ public class MainActivity extends AppCompatActivity
 
              else if (id == R.id.nav_physcount) {
 
+                 Cursor cursor = db.viewData();
+
                  CountFragment fragment = new CountFragment();
-                 changeFragment(fragment);
+                 CheckFragment fragment2 = new CheckFragment();
+
+
+                 if (!(cursor.getCount() == 0 )) {
+                     try {
+                         cursor.moveToNext();
+                         if (cursor.getString(7).equals("LOCATION"))
+                             changeFragment(fragment);
+                         else {
+                             navigationView.post(new Runnable() {
+                                 @Override
+                                 public void run() {
+                                     navigationView.setCheckedItem(R.id.nav_pricecheck);
+                                 }
+                             });
+                             changeFragment(fragment2);
+                             Toast.makeText(getApplicationContext(), "Invalid File", Toast.LENGTH_SHORT).show();
+                         }
+
+
+                     } catch (Exception e){
+                         e.printStackTrace();
+                     }
+
+
+                 }
+
+                 else {
+                     changeFragment(fragment);
+                 }
+
 
              }
 
 
         else if (id == R.id.nav_receive) {
 
-            ReceiveFragment fragment = new ReceiveFragment();
-                 changeFragment(fragment);
+
+                 Cursor cursor = db.viewData();
+
+                 ReceiveFragment fragment = new ReceiveFragment();
+                 CheckFragment fragment2 = new CheckFragment();
+
+
+                 if (!(cursor.getCount() == 0 )) {
+                     try {
+                         cursor.moveToNext();
+                         if (cursor.getString(7).equals("P.O. NUMBER"))
+                             changeFragment(fragment);
+                         else {
+
+                             navigationView.post(new Runnable() {
+                                 @Override
+                                 public void run() {
+                                     navigationView.setCheckedItem(R.id.nav_pricecheck);
+                                 }
+                             });
+                             changeFragment(fragment2);
+                             Toast.makeText(getApplicationContext(), "Invalid File", Toast.LENGTH_SHORT).show();
+
+                         }
+
+
+                     } catch (Exception e){
+                         e.printStackTrace();
+                     }
+
+
+                 }
+
+                 else {
+                     changeFragment(fragment);
+                 }
+
+
+
 
         }
 
@@ -159,6 +232,9 @@ public class MainActivity extends AppCompatActivity
         alert.setNegativeButton("Ok", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
                 String value = String.valueOf(input.getText());
+
+
+
                 if (value.equals("123456")){
                     dialog.dismiss();
                     Toast.makeText(getApplicationContext(), "Welcome!", Toast.LENGTH_SHORT).show();
