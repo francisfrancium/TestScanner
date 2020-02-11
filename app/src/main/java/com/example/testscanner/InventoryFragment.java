@@ -192,18 +192,23 @@ public class InventoryFragment extends Fragment {
 
 
                 if (cursor.getString(2).length() > 65) {
-                    userlist.append(cursor.getString(2).substring(0,64) + "\n");
-                    userlist2.append(cursor.getString(3) + "\n\n\n\n\n");
-                    userlist3.append(cursor.getString(4) + "\n\n\n\n\n");
+                    userlist.append(cursor.getString(2).substring(0,21) + "\n");
+                    userlist.append(cursor.getString(2).substring(22,43) + "\n");
+                    userlist.append(cursor.getString(2).substring(44,65) + "\n");
+                    userlist2.append(cursor.getString(3) + "\n\n\n\n");
+                    userlist3.append(cursor.getString(4) + "\n\n\n\n");
                 }
-                else if (cursor.getString(2).length() > 45) {
-                    userlist.append(cursor.getString(2) + "\n");
+                else if (cursor.getString(2).length() > 44) {
+                    userlist.append(cursor.getString(2).substring(0,21) + "\n");
+                    userlist.append(cursor.getString(2).substring(22,43) + "\n");
+                    userlist.append(cursor.getString(2).substring(43) + "\n");
                     userlist2.append(cursor.getString(3) + "\n\n\n\n");
                     userlist3.append(cursor.getString(4) + "\n\n\n\n");
                 }
 
-                else if (cursor.getString(2).length() > 25) {
-                    userlist.append(cursor.getString(2) + "\n");
+                else if (cursor.getString(2).length() > 22) {
+                    userlist.append(cursor.getString(2).substring(0,21) + "\n");
+                    userlist.append(cursor.getString(2).substring(21) + "\n");
                     userlist2.append(cursor.getString(3) + "\n\n\n");
                     userlist3.append(cursor.getString(4) + "\n\n\n");
                 }
