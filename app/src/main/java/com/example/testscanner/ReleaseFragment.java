@@ -124,6 +124,8 @@ public class ReleaseFragment extends Fragment {
         }
     }
 
+    //Test With new account
+
 
 
     private void clearView(){
