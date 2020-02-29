@@ -240,7 +240,7 @@ public class SettingsFragment extends Fragment {
 
                 try {
                     File sdcard = Environment.getExternalStorageDirectory();
-                    File file = new File(sdcard,"TestPurchaseOrder.csv");
+                    File file = new File(sdcard, "TestPurchaseOrder.csv");
 
                     BufferedReader br = new BufferedReader(new FileReader(file));
                     String line;
@@ -248,33 +248,58 @@ public class SettingsFragment extends Fragment {
                     String[] str;
                     str = line.split(",");
 
-                    if (str[3].equals("P.O. NUMBER"))
-                    db.insertData("BARCODE","DESCRIPTION",0,0,0, "USER", "P.O. NUMBER");
-                    else
-                        db.insertData("BARCODE","DESCRIPTION",0,0,0, "USER", "LOCATION");
+                    if (str[3].equals("FROM")) {
+                        db.insertTransfer("BARCODE", "DESCRIPTION", "USER", "LOCATION", 0, "DESTINATION");
 
+                        while ((line = br.readLine()) != null) {
+                            str = line.split(",");
 
-
-                    while ((line = br.readLine()) != null) {
-                        str = line.split(",");
-
-//                        if(str.length == 5) {
+                            //                        if(str.length == 5) {
 
                             String Barcode = str[0].trim();
                             String Description = str[1].trim();
-                            Integer Received = Math.round(Float.parseFloat(str[2]));
-                            Integer Released = 0;
                             String LastCol = str[3].trim();
 
-                            db.insertData(Barcode,Description,Received,Released,0, "User", LastCol);
+                            db.insertTransfer(Barcode, Description, "USER", LastCol, 0, "DESTINATION");
 
                             new toastview().toast("New File Uploaded!", getActivity()).show();
-//                        }
-//                        else {
-//                            new toastview().toast("Upload Failed.", getActivity()).show();
-//                        }
+                            //                        }
+                            //                        else {
+                            //                            new toastview().toast("Upload Failed.", getActivity()).show();
+                            //                        }
+
+                        }
 
                     }
+                    else
+                    {
+                        if (str[3].equals("P.O. NUMBER"))
+                            db.insertData("BARCODE", "DESCRIPTION", 0, 0, 0, "USER", "P.O. NUMBER");
+                        else
+                            db.insertData("BARCODE", "DESCRIPTION", 0, 0, 0, "USER", "LOCATION");
+
+
+                            while ((line = br.readLine()) != null) {
+                                str = line.split(",");
+
+    //                        if(str.length == 5) {
+
+                                String Barcode = str[0].trim();
+                                String Description = str[1].trim();
+                                Integer Received = Math.round(Float.parseFloat(str[2]));
+                                Integer Released = 0;
+                                String LastCol = str[3].trim();
+
+                                db.insertData(Barcode, Description, Received, Released, 0, "User", LastCol);
+
+                                new toastview().toast("New File Uploaded!", getActivity()).show();
+    //                        }
+    //                        else {
+    //                            new toastview().toast("Upload Failed.", getActivity()).show();
+    //                        }
+
+                            }
+                }
                     br.close() ;
                 }
                 catch (IOException e) {

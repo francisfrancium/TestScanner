@@ -8,6 +8,7 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.StrictMode;
+import android.provider.Settings;
 import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -77,7 +78,6 @@ public class InventoryFragment extends Fragment {
         Button sendinven = inflate.findViewById(R.id.sendinven_button);
 
         Objects.requireNonNull(getActivity()).setTitle("Inventory");
-
 
 
 
@@ -246,7 +246,7 @@ public class InventoryFragment extends Fragment {
 
     private void savePOOnClick(){
 
-        final String FILENAME = "TestScannerGRReport.csv";
+        final String FILENAME = "ScannerReport.csv";
 
         Cursor cursor = db.viewData();
 
@@ -264,14 +264,30 @@ public class InventoryFragment extends Fragment {
 
                     trans = cursor.getString(7);
 
-                    if (trans.equals("P.O. NUMBER"))
-                    entry.append("BARCODE").append(",").append("ITEM DESCRIPTION").append(",").append("PURCHASE QUANTITY").append(",").append("RECEIVED QUANTITY").append(",").append("VARIANCE").append(",").append("USER").append(",").append("P.O. NUMBER").append("\n");
-                    else
-                    entry.append("BARCODE").append(",").append("ITEM DESCRIPTION").append(",").append("SYSTEM QUANTITY").append(",").append("SCANNED QUANTITY").append(",").append("VARIANCE").append(",").append("USER").append(",").append("LOCATION").append("\n");
+                    if (cursor.getCount() == 7){
 
-                    while (cursor.moveToNext()) {
-                        entry.append(cursor.getString(1)).append(",").append(cursor.getString(2)).append(",").append(cursor.getString(3)).append(",").append(cursor.getString(4)).append(",").append(cursor.getInt(4) - cursor.getInt(3)).append(",").append(cursor.getString(6)).append(",").append(cursor.getString(7)).append("\n");
+                        while (cursor.moveToNext()){
+                            entry.append(cursor.getString(1)).append(",").append(cursor.getString(2)).append(",").append(cursor.getString(3)).append(",").append(cursor.getString(4)).append(",").append(cursor.getString(5)).append(",").append(cursor.getString(6)).append("\n");
+                        }
+
+
+
                     }
+
+                    else {
+
+                        if (trans.equals("P.O. NUMBER"))
+                            entry.append("BARCODE','").append(",").append("ITEM DESCRIPTION").append(",").append("PURCHASE QUANTITY").append(",").append("RECEIVED QUANTITY").append(",").append("VARIANCE").append(",").append("USER").append(",").append("P.O. NUMBER").append("\n");
+                        else if (trans.equals("LOCATION"))
+                            entry.append("BARCODE").append(",").append("ITEM DESCRIPTION").append(",").append("SYSTEM QUANTITY").append(",").append("SCANNED QUANTITY").append(",").append("VARIANCE").append(",").append("USER").append(",").append("LOCATION").append("\n");
+
+                        while (cursor.moveToNext()) {
+                            entry.append(cursor.getString(1)).append(",").append(cursor.getString(2)).append(",").append(cursor.getString(3)).append(",").append(cursor.getString(4)).append(",").append(cursor.getInt(4) - cursor.getInt(3)).append(",").append(cursor.getString(6)).append(",").append(cursor.getString(7)).append("\n");
+                        }
+
+                    }
+
+
                     fos.write(entry.toString().getBytes());
                     fos.close();
 
@@ -279,7 +295,7 @@ public class InventoryFragment extends Fragment {
                     e.printStackTrace();
                 }
 
-            new toastview().toast("Data Automatically Saved", getActivity()).show();
+            new toastview().toast("Data A utomatically Saved", getActivity()).show();
 
 
         }
@@ -325,7 +341,7 @@ public class InventoryFragment extends Fragment {
 
                 // sendfile
                     File sdcard = Environment.getExternalStorageDirectory();
-                File myFile = new File(sdcard,"TestScannerGRReport.csv");
+                File myFile = new File(sdcard,"ScannerReport.csv");
 
                 byte [] mybytearray  = new byte [(int)myFile.length()];
                 FileInputStream fis = new FileInputStream(myFile);

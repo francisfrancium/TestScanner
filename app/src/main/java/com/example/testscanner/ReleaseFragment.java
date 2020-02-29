@@ -24,15 +24,21 @@ import java.util.Objects;
 public class ReleaseFragment extends Fragment {
 
     private EditText editText ;
+    private EditText STETUser ;
+    private EditText STETQuant ;
+    private EditText STETDest ;
     private DatabaseHelper db;
     private TextView textViewBC;
     private TextView textViewDO;
     static String inputed;
+    static Integer quant;
+    static String user;
+    static String dest;
     private int[] currentcount = new int[100];
 
     private String barcode = "<font color = 'red'> BARCODE:</font>" ;
     private String item = "<font color = '#4f4f4f'> ITEM DESCRIPTION:</font>" ;
-    private String rls = "<font color = '#4f4f4f'> CURRENT QUANTITY FOR DELIVERY:</font>" ;
+    private String rls = "<font color = '#4f4f4f'> CURRENT QUANTITY TRANSFERED:</font>" ;
 
     public ReleaseFragment() {
         // Required empty public constructor
@@ -44,11 +50,14 @@ public class ReleaseFragment extends Fragment {
                              Bundle savedInstanceState) {
         View inflate = inflater.inflate(R.layout.fragment_release, container, false);
         textViewBC = inflate.findViewById(R.id.view_release);
-        textViewDO = inflate.findViewById(R.id.view_release_qty);
         editText = inflate.findViewById(R.id.input_releasing);
+        STETUser = inflate.findViewById(R.id.releasing_user);
+        STETQuant = inflate.findViewById(R.id.releasing_qty);
+        STETDest = inflate.findViewById(R.id.releasing_destination);
+
         db = new DatabaseHelper(this.getContext());
 
-        Objects.requireNonNull(getActivity()).setTitle("Delivery");
+        Objects.requireNonNull(getActivity()).setTitle("Store Transfer");
         inputed = "--------------------";
 
         clearView();
@@ -62,6 +71,8 @@ public class ReleaseFragment extends Fragment {
                         || event.getAction() == KeyEvent.ACTION_DOWN && event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
 
                     inputed = editText.getText().toString();
+                    quant = Integer.parseInt(STETQuant.getText().toString());
+                    dest = STETDest.getText().toString();
 
                     UpdateReleaseData();
 
@@ -81,7 +92,9 @@ public class ReleaseFragment extends Fragment {
 
         Cursor cursor = db.validateReleasedData();
 
+
         if (!(cursor.moveToFirst()) || cursor.getCount() == 0) {
+
             new toastview().toast("Failed! Item not Found!", getActivity()).show();
 
             clearView();
@@ -89,7 +102,7 @@ public class ReleaseFragment extends Fragment {
 
         } else {
             for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
-                new toastview().toast("Release Success!", getActivity()).show();
+                new toastview().toast("Transfer Success!", getActivity()).show();
                 //db.updateReleasedData(inputed, cursor.getInt(4) + 1);
                 textViewBC.setText(Html.fromHtml(barcode));
                 textViewBC.append("\n" + cursor.getString(1) + "\n\n");
@@ -103,7 +116,7 @@ public class ReleaseFragment extends Fragment {
 
 
 
-                db.logInsert(inputed, "Delivery", date);
+                db.logInsert(inputed, "Release", date);
                 textViewDO.setText("RELEASED QUANTITY:\n\t"   + currentcount[cursor.getInt(0)] + "\n");
                 db.updateReleasedData(inputed, currentcount[cursor.getInt(0)]);
 
@@ -119,8 +132,7 @@ public class ReleaseFragment extends Fragment {
         textViewBC.append(Html.fromHtml(item));
         textViewBC.append("\n--------------------\n\n");
         textViewBC.append(Html.fromHtml(rls));
-        textViewBC.append("\n--------------------\n");
-        textViewDO.setText("DELIVERED QUANTITY:\n--------------------"  );
+        textViewBC.append("\n------- -------------\n");
     }
 
 }

@@ -8,8 +8,8 @@
     <string name="pricecheck">Item Check</string>
     <string name="physcount">Physical Count</string>
     <string name="receiving">Receiving</string>
-    <string name="releasing">Delivery</string>
-    <string name="inventory">Inventory</string>
+    <string name="releasing">Store Transfer</string>
+    <string name="inventory">Inventory View</string>
     <string name="about">About</string>
     <string name="settings">Settings</string>
 

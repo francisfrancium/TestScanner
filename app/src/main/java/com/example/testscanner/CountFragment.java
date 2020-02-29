@@ -7,6 +7,7 @@ package com.example.testscanner;
         import android.os.Bundle;
 
 
+        import androidx.annotation.Nullable;
         import androidx.fragment.app.Fragment;
         import android.text.Html;
         import android.text.method.ScrollingMovementMethod;
@@ -49,20 +50,12 @@ public class CountFragment extends Fragment {
     private  Button startcount;
     private  Button endcount;
     private DatabaseHelper db;
-
     public static   String inputed;
 
     private int[] currentcount = new int[10000];
     private int inputedQty;
     public static   String inputedLocation;
-    private   String inputedSerial;
     private String inputedUser;
-
-
-
-    private Set<String> setchecker;
-
-    private  String ser = "<font color = 'red'> SERIAL NO.:</font>" ;
     private String barcode = "<font color = 'red'> BARCODE:</font>" ;
     private String item = "<font color = '#4f4f4f'> ITEM DESCRIPTION:</font>" ;
     private String rcv = "<font color = '#4f4f4f'> CURRENT IN ITEM MASTER:</font>" ;
@@ -97,7 +90,6 @@ public class CountFragment extends Fragment {
 
         inputed = "--------------------";
         inputedLocation = "--------------------";
-        inputedSerial = "--------------------";
 
 
         clearView();
@@ -205,7 +197,6 @@ public class CountFragment extends Fragment {
                 editTextLoc.setText("");
                 editTextBarc.setText("");
                 inputed = "";
-                inputedSerial = "";
                 inputedLocation = "";
 
                 clearView();

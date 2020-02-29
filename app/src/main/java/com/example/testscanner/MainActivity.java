@@ -146,6 +146,14 @@ public class MainActivity extends AppCompatActivity
 
              }
 
+             else if (id == R.id.nav_release){
+
+                 ReleaseFragment fragment = new ReleaseFragment();
+                 changeFragment(fragment);
+
+
+             }
+
 
         else if (id == R.id.nav_receive) {
 

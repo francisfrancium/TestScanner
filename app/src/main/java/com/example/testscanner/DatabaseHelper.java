@@ -28,14 +28,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String LOG_4 = "DATETRANS";
 
 
-    public static final String INV_TABLE = "purchaseorder_table";
+    public static final String ST_TABLE = "store_transfer_table";
     public static final String INV_1 = "ID";
     public static final String INV_2  = "BARCODE";
     public static final String INV_3 = "DESCRIPTION";
-    public static final String INV_4 = "QUANTITY";
-    public static final String INV_5 = "COUNTED";
-    public static final String INV_6 = "USER";
-    public static final String INV_7 = "LOCATION";
+    public static final String INV_4 = "USER";
+    public static final String INV_5 = "LOCATION";
+    public static final String INV_6 = "QUANTITY";
+    public static final String INV_7 = "DESTINATION";
 
 
 
@@ -50,7 +50,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("CREATE table " + TABLE_NAME + "(ID INTEGER PRIMARY KEY AUTOINCREMENT, BARCODE STRING, DESCRIPTION STRING, PURCHASEORDER INTEGER, RECEIVED INTEGER, DELIVERED INTEGER, USER STRING, LOCATION STRING)");
         db.execSQL("create table " + LOG_TABLE +" (ID INTEGER PRIMARY KEY AUTOINCREMENT,BARCODE STRING,TRANS STRING,DATETRANS STRING)");
-        db.execSQL("create table " + INV_TABLE +" (ID INTEGER PRIMARY KEY AUTOINCREMENT,BARCODE STRING,DESCRIPTION STRING,QUANTITY STRING, COUNTED STRING, USER STRING, LOCATION STRING)");
+        db.execSQL("create table " + ST_TABLE +" (ID INTEGER PRIMARY KEY AUTOINCREMENT,BARCODE STRING,DESCRIPTION STRING,USER STRING, LOCATION STRING, QUANTITY INTEGER, DESTINATION STRING)");
     }
 
     @Override
@@ -79,6 +79,29 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             return true;
         }
     }
+
+    public boolean insertTransfer(String STBarcode, String STDescription, String STUser, String STLocation ,Integer STQuant, String STDestination){
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(INV_2, STBarcode);
+        contentValues.put(INV_3, STDescription);
+        contentValues.put(INV_4, STUser);
+        contentValues.put(INV_5, STLocation);
+        contentValues.put(INV_6, STQuant);
+        contentValues.put(INV_7, STDestination);
+
+        long result = db.insert(ST_TABLE, null, contentValues);
+        if (result == -1){
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+
+
+
     public boolean logInsert(String Barcode, String Trans, String TransDate ){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -119,6 +142,21 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         contentValues.put(COL_8, Location);
 
         db.update(TABLE_NAME, contentValues, COL_2 + " = ? AND " + COL_8 + " = ? ",new String[] {Barcode, Location} );
+        return true;
+
+    }
+
+    public boolean updateTransferData(String STBarcode, String STUser, String STLocation, Integer STQuant, String STDestination ){
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(INV_2, STBarcode);
+        contentValues.put(INV_4, STUser);
+        contentValues.put(INV_5, STLocation);
+        contentValues.put(INV_6, STQuant);
+        contentValues.put(INV_7, STDestination);
+
+        db.update(TABLE_NAME, contentValues, INV_2 + " = ? AND " + INV_5 + " = ? AND " + INV_7 + " = ? ",new String[] {STBarcode, STLocation, STDestination} );
         return true;
 
     }
@@ -189,7 +227,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public Cursor validateReleasedData() {
         SQLiteDatabase db = this.getReadableDatabase() ;
         String searchCode = ReleaseFragment.inputed;
-        String query = "SELECT * FROM "+ TABLE_NAME + " WHERE " + COL_2 + " LIKE '" + searchCode + "'" ;
+        String destination = ReleaseFragment.dest;
+        String query = "SELECT * FROM "+ ST_TABLE + " WHERE " + INV_2 + " LIKE '" + searchCode + "'" + " AND " + INV_7 + " LIKE '" + destination + "'";
         Cursor cursor = db.rawQuery(query, null);
         return cursor;
 
@@ -201,7 +240,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TABLE_NAME,null,null);
         db.execSQL("DROP TABLE "+ TABLE_NAME);
+        db.execSQL("DROP TABLE "+ ST_TABLE);
         db.execSQL("CREATE table " + TABLE_NAME + "(ID INTEGER PRIMARY KEY AUTOINCREMENT, BARCODE STRING, DESCRIPTION STRING, PURCHASEORDER INTEGER, RECEIVED INTEGER, DELIVERED INTEGER, USER STRING, LOCATION STRING)");
+        db.execSQL("create table " + ST_TABLE +" (ID INTEGER PRIMARY KEY AUTOINCREMENT,BARCODE STRING,DESCRIPTION STRING,USER STRING, LOCATION STRING, QUANTITY INTEGER, DESTINATION STRING)");
         db.close();
     }
 

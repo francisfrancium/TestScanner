@@ -24,11 +24,11 @@
             android:icon="@drawable/product_recieve"
             android:title="@string/receiving"
             android:checkable="true"/>
-<!--        <item-->
-<!--            android:id="@+id/nav_release"-->
-<!--            android:icon="@drawable/product_release"-->
-<!--            android:title="@string/releasing"-->
-<!--            />-->
+        <item
+            android:id="@+id/nav_release"
+            android:icon="@drawable/product_release"
+            android:title="@string/releasing"
+            />
         <item
             android:id="@+id/nav_inven"
             android:icon="@drawable/add_item"
